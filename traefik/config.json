@@ -1,0 +1,42 @@
+{
+    "name": "Traefik",
+    "version": "2.1.1",
+    "slug": "traefik",
+    "description": "Traefik is a modern HTTP reverse proxy and load balancer that makes deploying microservices easy.",
+    "arch": ["armv7", "amd64"],
+    "startup": "system",
+    "boot": "auto",
+    "url": "https://github.com/alex3305/hassio-addons/",
+    "ports": {
+        "80/tcp": 8000,
+        "443/tcp": 443
+    },
+    "ports_description": {
+        "80/tcp": "HTTP",
+        "443/tcp": "HTTPS"
+    },
+    "map": [
+        "config",
+        "share",
+        "ssl:rw"
+    ],
+    "options": {
+        "log_level": "INFO",
+        "dynamic_configuration_path": "/config/traefik/",
+        "letsencrypt": {
+            "enabled": false
+        },
+        "env_vars": []
+    },
+    "schema": {
+        "log_level": "match(DEBUG|PANIC|FATAL|ERROR|WARN|INFO)",
+        "dynamic_configuration_path": "str",
+        "letsencrypt": {
+            "enabled": "bool",
+            "email": "email?",
+            "challenge_type": "match(tlsChallenge|httpChallenge|dnsChallenge)?",
+            "provider": "str?"
+        },
+        "env_vars": ["str"]
+    }
+}

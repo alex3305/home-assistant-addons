@@ -1,0 +1,36 @@
+# Static configuration for Hass.io Traefik add-on
+# DO NOT MODIFY - Managed by run.sh init script
+
+global:
+  checkNewVersion: false
+  sendAnonymousUsage: false
+
+entryPoints:
+  web:
+    address: ":80"
+  web-secure:
+    address: ":443"
+
+{% if letsencrypt.enabled -%}
+certificatesResolvers:
+  le:
+    acme:
+      email: "{{ letsencrypt.email }}"
+      storage: "/ssl/traefik/acme.json"
+  {%- if letsencrypt.challenge_type == 'tlsChallenge' %}
+      tlsChallenge: {}
+  {%- elif letsencrypt.challenge_type == 'httpChallenge' %}
+      httpChallenge:
+        entryPoint: web
+  {%- elif letsencrypt.challenge_type == 'dnsChallenge' %}
+      dnsChallenge:
+        provider: {{ letsencrypt.provider }}
+  {%- endif %}
+{%- endif %}
+
+providers:
+  file:
+    directory: "{{ dynamic_configuration_path }}"
+
+log:
+  level: {{ log_level }}
