@@ -11,4 +11,5 @@ This repository contains Hass.io Add-ons for use within [Hass.io](https://www.ho
 
 ## Add-ons
 
+* [Rclone](rclone/README.md)
 * [Traefik](traefik/README.md)
