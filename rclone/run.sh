@@ -1,18 +1,19 @@
-#!/usr/bin/env bash
-set -e
-CONFIG_PATH=/data/options.json
+#!/usr/bin/env bashio
 
-RCLONE_CONFIG=$(/usr/bin/jq --raw-output '.configuration_path' $CONFIG_PATH)
+RCLONE_CONFIG=$(bashio::config 'configuration_path')
 
-REMOTE=$(/usr/bin/jq --raw-output '.remote' $CONFIG_PATH)
-REMOTE_PATH=$(/usr/bin/jq --raw-output '.remote_path' $CONFIG_PATH)
+REMOTE=$(bashio::config 'remote')
+REMOTE_PATH=$(bashio::config 'remote_path')
 
-LOCAL_RETENTION=$(/usr/bin/jq --raw-output '.local_retention_days' $CONFIG_PATH)
-REMOTE_RETENTION=$(/usr/bin/jq --raw-output '.remote_retention_days' $CONFIG_PATH)
+LOCAL_RETENTION=$(bashio::config 'local_retention_days')
+REMOTE_RETENTION=$(bashio::config 'remote_retention_days')
 
-echo "[ADDON] Pruning local files..."
-/usr/bin/find /backup/ -mtime +${LOCAL_RETENTION} -type f -delete
+bashio::log.info "Pruning local files..."
+find /backup/ -mtime +${LOCAL_RETENTION} -type f -delete
+bashio::log.info "Pruning local files finished"
 
-echo "[ADDON] Starting copy..."
-/usr/bin/rclone -v --config ${RCLONE_CONFIG} --max-age "${REMOTE_RETENTION}d" copy /backup/ "${REMOTE}:${REMOTE_PATH}"
-echo "[ADDON] Copy finished"
+bashio::log.info "Starting remote copy..."
+rclone -v --config ${RCLONE_CONFIG} \
+    --max-age "${REMOTE_RETENTION}d" \
+    --ignore-existing copy /backup/ "${REMOTE}:${REMOTE_PATH}"
+bashio::log.info "Remote copy finished"
