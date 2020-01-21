@@ -1,19 +1,19 @@
-#!/bin/sh
+#!/usr/bin/env bashio
 
-echo "[ADDON] Generating static config..."
+bashio::log.info "Generating static config..."
 j2 /etc/traefik/traefik.yaml.j2 /data/options.json -o /etc/traefik/traefik.yaml
-echo "[ADDON] Static config set in /etc/traefik/traefik.yaml"
+bashio::log.info "Static config generated"
 
-echo "[ADDON] Extracting environment variables..."
+bashio::log.info "Extracting environment variables..."
 ENV_VARS=$(j2 /etc/traefik/env.j2 /data/options.json)
 
 if [ -z "$ENV_VARS" ]; then
-    echo "[ADDON] No additional environment variables found"
+    bashio::log.info "No additional environment variables found"
 else
-    echo "[ADDON] Extracted ${ENV_VARS}"
+    bashio::log.info "Extracted variables ${ENV_VARS}"
 fi
 
-echo "[ADDON] Starting Traefik..."
+bashio::log.info "Starting Traefik..."
 if [ -z "$ENV_VARS" ]; then
     /usr/local/bin/traefik
 else
