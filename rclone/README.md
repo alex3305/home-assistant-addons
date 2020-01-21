@@ -78,6 +78,24 @@ The number of days the local files are kept. Files older than this date are prun
 
 The number of days the remote files are kept. Files older than this date are pruned by this application. If for example the set value is 15, remote files older than 15 days will be deleted.
 
+## Automations
+
+This add-on can easily be used with an automation. For instance:
+
+```yaml
+- id: home_assistant_run_backup
+  alias: Home Assistant backup
+  trigger:
+    platform: time
+    at: '07:30'
+  action:
+    service: hassio.addon_start
+    data_template:
+      addon: 32de6d38_rclone
+```
+
+Which will prune local files and run Rclone copy at 07:30 in the morning.
+
 ## Known issues and limitations
 
 * You will have to manually create rclone config
