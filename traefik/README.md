@@ -93,6 +93,10 @@ Traefik logs concern everything that happens to Traefik itself (startup, configu
 * `FATAL`
 * `PANIC`
 
+### Option `access_logs` (required)
+
+Whether to enable access logging to standard out. These logs will be shown in the Hass.io Add-On panel.
+
 ### Option `dynamic_configuration_path` (required)
 
 Path to the directory with the dynamic endpoint configuration. See the example above. 

@@ -32,5 +32,9 @@ providers:
   file:
     directory: "{{ dynamic_configuration_path }}"
 
+{% if access_logs -%}
+accessLog: {}
+{%- endif %}
+
 log:
   level: {{ log_level }}
