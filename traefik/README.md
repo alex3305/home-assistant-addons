@@ -69,6 +69,7 @@ Add-on configuration:
 ```json
 {
   "log_level": "INFO",
+  "access_logs": false,
   "dynamic_configuration_path": "/config/traefik/",
   "letsencrypt": {
     "enabled": true,
