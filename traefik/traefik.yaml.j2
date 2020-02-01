@@ -10,6 +10,10 @@ entryPoints:
     address: ":80"
   web-secure:
     address: ":443"
+{%- if forwarded_headers_insecure %}
+    forwardedHeaders:
+      insecure: true
+{%- endif %}
 
 {% if letsencrypt.enabled -%}
 certificatesResolvers:

@@ -64,12 +64,13 @@ http:
 
 ## Configuration
 
-Add-on configuration:
+Example add-on configuration for Let's Encrypt with Cloudflare DNS proxy and dynamic configuration within your Home Assistant configuration directory:
 
 ```json
 {
   "log_level": "INFO",
   "access_logs": false,
+  "forwarded_headers_insecure": true,
   "dynamic_configuration_path": "/config/traefik/",
   "letsencrypt": {
     "enabled": true,
@@ -97,6 +98,12 @@ Traefik logs concern everything that happens to Traefik itself (startup, configu
 ### Option `access_logs` (required)
 
 Whether to enable access logging to standard out. These logs will be shown in the Hass.io Add-On panel.
+
+### Option `forwarded_headers_insecure` (required)
+
+Enables insecure forwarding headers. When this option is enabled, the forwarded headers (`X-Forwarded-*`) will not be replaced by Traefik headers. Only enable this option when you trust your forwarding proxy.
+
+> ___Note__ for Cloudflare `X-Forwarded-*` proxied headers to work, this must be enabled._
 
 ### Option `dynamic_configuration_path` (required)
 
