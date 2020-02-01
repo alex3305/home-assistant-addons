@@ -36,7 +36,7 @@ After installation you will need to generate a rclone configuration file. This c
 ### Example Rclone configuration
 
 ```conf
-[stack]
+[myremote]
 type = owncloud
 url = https://some.owncloudhost.com/remote.php/webdav/
 vendor = owncloud
@@ -49,7 +49,7 @@ pass = *** ENCRYPTED PASS ***
 ```json
 {
   "configuration_path": "/share/rclone/rclone.conf",
-  "remote": "owncloud",
+  "remote": "myremote",
   "remote_path": "/backups/",
   "local_retention_days": 45,
   "remote_retention_days": 15
