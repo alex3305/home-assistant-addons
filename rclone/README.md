@@ -1,6 +1,6 @@
-# Community Hass.io Add-ons: Rclone (unofficial)
+# Community Home Assistant Add-ons: Rclone (unofficial)
 
-Rclone bundled as an Hass.io add-on.
+Rclone bundled as an Home Assistant add-on.
 
 ## About
 
@@ -8,7 +8,7 @@ Rclone bundled as an Hass.io add-on.
 
 Follow these steps to get the add-on installed on your system:
 
-1. Navigate in your Home Assistant frontend to __Hass.io -> Add-on Store__
+1. Navigate in your Home Assistant frontend to __Supervisor -> Add-on Store__
 2. Add this new repository by URL (`https://github.com/alex3305/hassio-addons`)
 3. Find the "Rclone" add-on and click it.
 4. Click on the "INSTALL" button
@@ -46,14 +46,12 @@ pass = *** ENCRYPTED PASS ***
 
 ## Configuration
 
-```json
-{
-  "configuration_path": "/share/rclone/rclone.conf",
-  "remote": "myremote",
-  "remote_path": "/backups/",
-  "local_retention_days": 45,
-  "remote_retention_days": 15
-}
+```yaml
+configuration_path: /share/rclone/rclone.conf
+remote: myremote
+remote_path: /backups/
+local_retention_days: 45
+remote_retention_days: 15
 ```
 
 ### Option `configuration_path` (required)
@@ -99,7 +97,7 @@ Which will prune local files and run Rclone copy at 07:30 in the morning.
 ## Known issues and limitations
 
 * You will have to manually create rclone config
-* Only a single remote is allowed
+* Only a single remote is configurable
 
 ## Final notes
 

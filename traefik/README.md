@@ -1,6 +1,6 @@
-# Community Hass.io Add-ons: Traefik (unofficial)
+# Community Home Assistant Add-ons: Traefik (unofficial)
 
-Traefik bundled as an Hass.io add-on.
+Traefik bundled as an Home Assistant add-on.
 
 ## About
 
@@ -12,7 +12,7 @@ Traefik is a modern HTTP reverse proxy and load balancer that makes deploying mi
 
 Follow these steps to get the add-on installed on your system:
 
-1. Navigate in your Home Assistant frontend to __Hass.io -> Add-on Store__
+1. Navigate in your Home Assistant frontend to __Supervisor -> Add-on Store__
 2. Add this new repository by URL (`https://github.com/alex3305/hassio-addons`)
 3. Find the "Traefik" add-on and click it.
 4. Click on the "INSTALL" button
@@ -66,22 +66,19 @@ http:
 
 Example add-on configuration for Let's Encrypt with Cloudflare DNS proxy and dynamic configuration within your Home Assistant configuration directory:
 
-```json
-{
-  "log_level": "INFO",
-  "access_logs": false,
-  "forwarded_headers_insecure": true,
-  "dynamic_configuration_path": "/config/traefik/",
-  "letsencrypt": {
-    "enabled": true,
-    "email": "example@hass.io",
-    "challenge_type": "dnsChallenge",
-    "provider": "cloudflare"
-  },
-  "env_vars": [
-    "CF_DNS_API_TOKEN=SOME-API-TOKEN-HERE"
-  ]
-}
+```yaml
+log_level: INFO
+access_logs: false
+forwarded_headers_insecure: true
+dynamic_configuration_path: /config/traefik
+letsencrypt:
+  enabled: true
+  email: example@home-assistant.io
+  challenge_type: dnsChallenge
+  provider: cloudflare
+env_vars:
+  - CF_DNS_API_TOKEN=YOUR-API-TOKEN-HERE
+  - ANOTHER_ENV_VARIABLE=SOME-VALUE
 ```
 
 ### Option `log_level` (required)
