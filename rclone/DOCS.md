@@ -46,23 +46,19 @@ pass = *** ENCRYPTED PASS ***
 
 ```yaml
 configuration_path: /share/rclone/rclone.conf
-remote: myremote
-remote_path: /backups/
 local_retention_days: 45
-remote_retention_days: 15
+remotes:
+  - name: my-webdav
+    path: /backups/
+    retention_days: 30
+  - name: my-gdrive
+    path: /
+    retention_days: 14
 ```
 
 ### Option `configuration_path` (required)
 
 Path to the Rclone configuration file. You can use the `/share/` or `/config/` directories for storing this file.
-
-### Option `remote` (required)
-
-Name of the remote to copy the Hass.io snapshots to.
-
-### Option `remote_path` (required)
-
-Path on the remote where the copied files should be stored. 
 
 ### Option `local_retention_days` (required)
 
@@ -70,7 +66,15 @@ The number of days the local files are kept. Files older than this date are prun
 
 > __Note__ This value should be higher than `remote_retention_days`.
 
-### Option `remote_retention_days` (required)
+### Option `remotes.name` (required)
+
+Name of the remote to copy the Hass.io snapshots to.
+
+### Option `remotes.path` (required)
+
+Path on the remote where the copied files should be stored. 
+
+### Option `remotes.retention_days` (required)
 
 The number of days the remote files are kept. Files older than this date are pruned by this application. If for example the set value is 15, remote files older than 15 days will be deleted.
 
@@ -91,12 +95,3 @@ This add-on can easily be used with an automation. For instance:
 ```
 
 Which will prune local files and run Rclone copy at 07:30 in the morning.
-
-## Known issues and limitations
-
-* You will have to manually create rclone config
-* Only a single remote is configurable
-
-## Final notes
-
-This project is not affiliated with Rclone, the Rclone Maintainers Team or Nick Craig-Wood, but simply a community effort. Rclone itself is distributed under the [MIT License](https://rclone.org/licence/).

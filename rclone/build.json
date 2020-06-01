@@ -1,0 +1,8 @@
+{
+    "build_from": {
+        "amd64": "hassioaddons/base"
+    },
+    "args": {
+        "RCLONE_VERSION": "1.50.2"
+    }
+}
