@@ -15,8 +15,7 @@ RUN apk add --no-cache python3 py3-pip && \
     tar xzvf /tmp/traefik.tar.gz -C /usr/local/bin traefik && \
     chmod a+x /usr/local/bin/traefik && \
     chmod a+x /run.sh && \
-    rm -f /tmp/traefik.tar.gz && \
-    apk del py3-pip
+    rm -f /tmp/traefik.tar.gz
 
 EXPOSE 80 443 8080
 CMD [ "/run.sh" ]
