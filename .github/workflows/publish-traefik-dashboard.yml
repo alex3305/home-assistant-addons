@@ -1,0 +1,24 @@
+name: Publish Treafik dashboard
+
+on: [push]
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          repository: containous/traefik
+          ref: v2.2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+          registry-url: https://npm.pkg.github.com/
+      - run: npm install
+        working-directory: ./webui/
+      - run: npm build
+        working-directory: ./webui/
+      - run: npm publish
+        working-directory: ./webui/
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
