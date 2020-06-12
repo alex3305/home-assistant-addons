@@ -30,11 +30,13 @@ jobs:
       - name: Build dashboard
         run: npm run build
         working-directory: './traefik/webui/'
+        env:
+          APP_API: '../api'
       - name: Set up correct package.json for publishing
         run: |
           mkdir -p ./local/temp
-          cp ./traefik/webui/dist/spa/* ./local/temp/
-          cp ./local/traefik/package.json ./local/temp/
+          cp -r ./traefik/webui/dist/spa/* ./local/temp/
+          cp -r ./local/traefik/package.json ./local/temp/
       - name: Publish Treafik dashboard
         run: npm publish
         working-directory: './local/temp/'
