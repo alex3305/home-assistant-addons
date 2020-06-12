@@ -1,6 +1,9 @@
 name: Publish Treafik dashboard
 
 on: [push]
+# on:
+#   push:
+#     paths: 'traefik/*.json'
 
 jobs:
   build-and-publish:
@@ -8,17 +11,25 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
+          path: './local/'
+      - uses: actions/checkout@v2
+        with:
           repository: containous/traefik
           ref: v2.2
+          path: './traefik/'
       - uses: actions/setup-node@v1
         with:
           node-version: 12
           registry-url: https://npm.pkg.github.com/
       - run: npm install
-        working-directory: ./webui/
+        working-directory: './traefik/webui/'
       - run: npm build
-        working-directory: ./webui/
+        working-directory: './traefik/webui/'
+      - run: |
+          mkdir -p ./local/temp
+          cp ./traefik/webui/dist/spa/* ./local/temp/
+          cp ./local/traefik/package.json ./local/temp/
       - run: npm publish
-        working-directory: ./webui/
+        working-directory: './local/temp/'
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
