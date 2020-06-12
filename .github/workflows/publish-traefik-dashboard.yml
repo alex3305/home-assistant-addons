@@ -9,27 +9,34 @@ jobs:
   build-and-publish:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout current repository
+        uses: actions/checkout@v2
         with:
           path: './local/'
-      - uses: actions/checkout@v2
+      - name: Checkout Treafik repository
+        uses: actions/checkout@v2
         with:
           repository: containous/traefik
           ref: v2.2
           path: './traefik/'
-      - uses: actions/setup-node@v1
+      - name: Set up NodeJS and NPM
+        uses: actions/setup-node@v1
         with:
           node-version: 12
           registry-url: https://npm.pkg.github.com/
-      - run: npm install
+      - name: NPM Install
+        run: npm install
         working-directory: './traefik/webui/'
-      - run: npm build
+      - name: Build dashboard
+        run: npm run build
         working-directory: './traefik/webui/'
-      - run: |
+      - name: Set up correct package.json for publishing
+        run: |
           mkdir -p ./local/temp
           cp ./traefik/webui/dist/spa/* ./local/temp/
           cp ./local/traefik/package.json ./local/temp/
-      - run: npm publish
+      - name: Publish Treafik dashboard
+        run: npm publish
         working-directory: './local/temp/'
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
