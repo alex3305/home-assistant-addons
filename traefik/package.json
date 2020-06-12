@@ -1,7 +1,7 @@
 {
-  "name": "traefik-ui",
+  "name": "@alex3305/traefik-ui",
   "version": "2.2.0",
-  "description": "Traefik UI",
+  "description": "Traefik UI for Home Assistant integration",
   "productName": "Traefik",
   "private": false,
   "dependencies": {},
