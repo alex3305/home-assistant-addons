@@ -6,7 +6,7 @@
     "arch": ["amd64"],
     "startup": "once",
     "boot": "manual",
-    "url": "https://github.com/alex3305/hassio-addons/tree/master/rclone",
+    "url": "https://alxx.nl/hassio-addons/tree/master/rclone",
     "map": [
         "backup:rw",
         "config",
