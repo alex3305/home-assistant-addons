@@ -11,5 +11,6 @@ This repository contains Hass.io Add-ons for use within [Home Assistant](https:/
 
 ## Add-ons
 
+* [Ansible Vault](ansible-vault/README.md)
 * [Rclone](rclone/README.md)
 * [Traefik](traefik/README.md)
