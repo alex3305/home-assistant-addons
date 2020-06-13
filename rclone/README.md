@@ -1,4 +1,4 @@
-# Community Home Assistant Add-ons: Rclone (unofficial)
+# Unofficial Home Assistant Add-ons: Rclone
 
 Rclone bundled as an Home Assistant add-on.
 

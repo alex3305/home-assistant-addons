@@ -1,4 +1,4 @@
-# Community Home Assistant Add-ons: Traefik (unofficial)
+# Unofficial Home Assistant Add-ons: Traefik
 
 Traefik bundled as an Home Assistant add-on.
 
