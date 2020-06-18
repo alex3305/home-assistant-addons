@@ -10,7 +10,6 @@ Traefik is a modern HTTP reverse proxy and load balancer that makes deploying mi
 
 ## Known issues and limitations
 
-* No Traefik dashboard available
 * Default port 80 can conflict with other ports
 * You cannot use double quotes or escape characters within environment variables
 
