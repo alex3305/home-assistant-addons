@@ -15,6 +15,10 @@ entryPoints:
       insecure: true
 {%- endif %}
 
+api:
+  dashboard: true
+  insecure: true
+
 {% if letsencrypt.enabled -%}
 certificatesResolvers:
   le:

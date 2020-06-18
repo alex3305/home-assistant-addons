@@ -16,6 +16,9 @@ else
     bashio::log.debug "Extracted variables ${ENV_VARS}"
 fi
 
+bashio::log.info "Starting Nginx for dashboard..."
+nginx -g 'pid /tmp/nginx.pid;'
+
 bashio::log.info "Starting Traefik..."
 if [ -z "$ENV_VARS" ]; then
     /usr/local/bin/traefik
