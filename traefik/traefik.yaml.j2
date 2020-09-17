@@ -33,6 +33,14 @@ certificatesResolvers:
   {%- elif letsencrypt.challenge_type == 'dnsChallenge' %}
       dnsChallenge:
         provider: {{ letsencrypt.provider }}
+        delayBeforeCheck: {{ letsencrypt.delayBeforeCheck }}
+      {% if letsencrypt.resolvers %}
+        resolvers:
+        {% for resolver in letsencrypt.resolvers -%}
+          - "{{ resolver }}"
+
+        {% endfor %}
+      {%- endif %}
   {%- endif %}
 {%- endif %}
 
