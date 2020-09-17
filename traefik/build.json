@@ -1,7 +1,8 @@
 {
     "build_from": {
         "amd64": "hassioaddons/base",
-        "armv7": "hassioaddons/base"
+        "armv7": "hassioaddons/base",
+        "aarch64": "hassioaddons/base"
     },
     "args": {
         "TRAEFIK_VERSION": "2.2.11"

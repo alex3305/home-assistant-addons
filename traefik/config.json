@@ -3,7 +3,11 @@
     "version": "3.0.3",
     "slug": "traefik",
     "description": "Traefik is a modern HTTP reverse proxy and load balancer that makes deploying microservices easy.",
-    "arch": ["armv7", "amd64"],
+    "arch": [
+        "armv7",
+        "amd64",
+        "aarch64"
+    ],
     "startup": "system",
     "boot": "auto",
     "url": "https://alxx.nl/hassio-addons/tree/master/traefik",
