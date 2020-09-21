@@ -38,8 +38,7 @@ certificatesResolvers:
         resolvers:
         {% for resolver in letsencrypt.resolvers -%}
           - "{{ resolver }}"
-
-        {% endfor %}
+        {%- endfor %}
       {%- endif %}
   {%- endif %}
 {%- endif %}
