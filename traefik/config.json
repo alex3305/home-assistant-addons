@@ -1,6 +1,6 @@
 {
     "name": "Traefik",
-    "version": "3.0.4",
+    "version": "3.0.5",
     "slug": "traefik",
     "description":
     "Traefik is a modern HTTP reverse proxy and load balancer that makes deploying microservices easy.",
@@ -26,7 +26,8 @@
         "forwarded_headers_insecure": false,
         "dynamic_configuration_path": "/config/traefik/",
         "letsencrypt": {
-            "enabled": false
+            "enabled": false,
+            "resolvers": []
         },
         "env_vars": []
     },
