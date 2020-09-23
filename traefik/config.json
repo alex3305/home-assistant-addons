@@ -2,8 +2,9 @@
     "name": "Traefik",
     "version": "3.0.3",
     "slug": "traefik",
-    "description": "Traefik is a modern HTTP reverse proxy and load balancer that makes deploying microservices easy.",
-    "arch": ["armv7", "amd64"],
+    "description":
+    "Traefik is a modern HTTP reverse proxy and load balancer that makes deploying microservices easy.",
+    "arch": ["armv7", "amd64", "aarch64"],
     "startup": "system",
     "boot": "auto",
     "url": "https://alxx.nl/hassio-addons/tree/master/traefik",
@@ -18,18 +19,16 @@
     "ingress": true,
     "ingress_entry": "dashboard/",
     "panel_icon": "mdi:earth-arrow-right",
-    "map": [
-        "config",
-        "share",
-        "ssl:rw"
-    ],
+    "map": ["config", "share", "ssl:rw"],
     "options": {
         "log_level": "INFO",
         "access_logs": false,
         "forwarded_headers_insecure": false,
         "dynamic_configuration_path": "/config/traefik/",
         "letsencrypt": {
-            "enabled": false
+            "enabled": false,
+            "delayBeforeCheck": 0,
+            "resolvers": []
         },
         "env_vars": []
     },
@@ -42,7 +41,9 @@
             "enabled": "bool",
             "email": "email?",
             "challenge_type": "match(tlsChallenge|httpChallenge|dnsChallenge)?",
-            "provider": "str?"
+            "provider": "str?",
+            "delayBeforeCheck": "int",
+            "resolvers": ["str?"]
         },
         "env_vars": ["str"]
     }

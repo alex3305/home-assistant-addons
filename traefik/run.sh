@@ -21,8 +21,8 @@ nginx -g 'pid /tmp/nginx.pid;'
 
 bashio::log.info "Starting Traefik..."
 if [ -z "$ENV_VARS" ]; then
+    bashio::log.info "Running Traefik without env_vars"
     /usr/local/bin/traefik
 else
-    export "${ENV_VARS}"
-    exec /usr/local/bin/traefik
+    env $ENV_VARS /usr/local/bin/traefik
 fi
