@@ -25,7 +25,7 @@ certificatesResolvers:
     acme:
       email: "{{ letsencrypt.email }}"
       storage: "/ssl/traefik/acme.json"
-  {%- if letsencrypt.challenge_type == 'tlsChallenge' %}
+  {%- if letsencrypt.challenge_type is not defined or letsencrypt.challenge_type == 'tlsChallenge' %}
       tlsChallenge: {}
   {%- elif letsencrypt.challenge_type == 'httpChallenge' %}
       httpChallenge:
@@ -33,7 +33,9 @@ certificatesResolvers:
   {%- elif letsencrypt.challenge_type == 'dnsChallenge' %}
       dnsChallenge:
         provider: {{ letsencrypt.provider }}
+    {%- if letsencrypt.delayBeforeCheck is defined %}
         delayBeforeCheck: {{ letsencrypt.delayBeforeCheck }}
+    {%- endif %}
       {% if letsencrypt.resolvers %}
         resolvers:
         {% for resolver in letsencrypt.resolvers -%}

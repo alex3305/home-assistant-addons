@@ -58,7 +58,7 @@ http:
 
 ## Configuration
 
-Example add-on configuration for Let's Encrypt with Cloudflare DNS proxy and dynamic configuration within your Home Assistant configuration directory:
+Full add-on example configuration for Let's Encrypt with Cloudflare DNS proxy and dynamic configuration within your Home Assistant configuration directory:
 
 ```yaml
 log_level: INFO
@@ -70,6 +70,9 @@ letsencrypt:
   email: example@home-assistant.io
   challenge_type: dnsChallenge
   provider: cloudflare
+  delayBeforeCheck: 10
+  resolvers:
+    - '1.1.1.1:53'
 env_vars:
   - CF_DNS_API_TOKEN=YOUR-API-TOKEN-HERE
   - ANOTHER_ENV_VARIABLE=SOME-VALUE
@@ -108,6 +111,8 @@ Whether or not to enable Let's Encrypt. When this is enabled the `le` certResolv
 
 Your personal e-mail that you want to use for Let's Encrypt.
 
+> _**Note** This is required when Let's Encrypt is enabled._
+
 ### Option `letsencrypt.challenge_type`
 
 A challange type you want to use for Let's Encrypt. Valid options are:
@@ -121,6 +126,18 @@ For more information on challange types and which one to choose, please see the 
 ### Option `letsencrypt.provider`
 
 When using the `dnsChallange` you will also need to set a provider to use. The list of providers can be found in the [Let's Encrypt provider section](https://docs.traefik.io/https/acme/#providers) of the Traefik documentation.
+
+### Option `letsencrypt.delayBeforeCheck`
+
+By default, the provider will verify the TXT DNS challenge record before letting ACME verify. If `delayBeforeCheck` is set and greater than zero, this check is delayed for the configured duration in seconds. 
+
+This setting can be useful if internal networks block external DNS queries. For more information, check the [Traefik documentation](https://docs.traefik.io/https/acme/#dnschallenge) regarding this subject.
+
+### Option `letsencrypt.resolvers`
+
+Manually set the DNS servers to use when performing the verification step. Useful for situations where internal DNS does not resolve to the same addresses as the public internet (e.g. on a LAN using a FQDN as part of hostnames). 
+
+For more information, see the [Traefik documentation](https://docs.traefik.io/https/acme/#resolvers) regarding this subject.
 
 ### Option `env_vars`
 
