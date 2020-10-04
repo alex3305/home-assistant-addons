@@ -5,6 +5,6 @@
         "aarch64": "hassioaddons/base"
     },
     "args": {
-        "TRAEFIK_VERSION": "2.2.11"
+        "TRAEFIK_VERSION": "2.3.1"
     }
 }
