@@ -55,4 +55,4 @@ accessLog: {}
 {{- end }}
 
 log:
-  level: {{ $options.log_level }}
+  level: {{ strings.ToUpper $options.log_level }}

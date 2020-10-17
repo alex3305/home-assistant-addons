@@ -1,6 +1,6 @@
 {
     "name": "Traefik",
-    "version": "3.2.0",
+    "version": "4.0.0",
     "slug": "traefik",
     "description": "Traefik is a modern HTTP reverse proxy and load balancer that makes deploying microservices easy.",
     "arch": ["armhf", "armv7", "amd64", "aarch64", "i386"],
@@ -17,10 +17,12 @@
     },
     "ingress": true,
     "ingress_entry": "dashboard/",
+    "hassio_role": "default",
+    "hassio_api": true,
     "panel_icon": "mdi:earth-arrow-right",
     "map": ["config", "share", "ssl:rw"],
     "options": {
-        "log_level": "INFO",
+        "log_level": "info",
         "access_logs": false,
         "forwarded_headers_insecure": false,
         "dynamic_configuration_path": "/config/traefik/",
@@ -31,7 +33,7 @@
         "env_vars": []
     },
     "schema": {
-        "log_level": "match(DEBUG|PANIC|FATAL|ERROR|WARN|INFO)",
+        "log_level": "list(trace|debug|info|notice|warning|error|fatal)",
         "access_logs": "bool",
         "forwarded_headers_insecure": "bool",
         "dynamic_configuration_path": "str",
