@@ -1,6 +1,10 @@
 {
     "build_from": {
-        "amd64": "hassioaddons/base"
+        "amd64": "hassioaddons/base",
+        "armhf": "hassioaddons/base",
+        "armv7": "hassioaddons/base",
+        "aarch64": "hassioaddons/base",
+        "i386": "hassioaddons/base"
     },
     "args": {
         "RCLONE_VERSION": "1.53.1"

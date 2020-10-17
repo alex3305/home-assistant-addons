@@ -1,4 +1,4 @@
-#!/usr/bin/env bashio
+#!/usr/bin/with-contenv bashio
 
 RCLONE_CONFIG=$(bashio::config 'configuration_path')
 REMOTES=$(bashio::config 'remotes')

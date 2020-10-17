@@ -1,12 +1,14 @@
 {
     "name": "Rclone",
-    "version": "2.0.2",
+    "version": "3.0.0",
     "slug": "rclone",
     "description": "Rclone is a command line program to sync files and directories to and from various providers.",
-    "arch": ["amd64"],
+    "arch": ["armhf", "armv7", "amd64", "aarch64", "i386"],
     "startup": "once",
     "boot": "manual",
     "url": "https://alxx.nl/hassio-addons/tree/master/rclone",
+    "hassio_role": "default",
+    "hassio_api": true,
     "map": [
         "backup:rw",
         "config:rw",
