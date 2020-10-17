@@ -4,11 +4,11 @@ bashio::log.info "Ensuring SSL directory..."
 mkdir -p /ssl/traefik/
 
 bashio::log.info "Generating static config..."
-j2 /etc/traefik/traefik.yaml.j2 /data/options.json -o /etc/traefik/traefik.yaml
+gomplate -f /etc/traefik/traefik.yaml.gotmpl -d options=/data/options.json -o /etc/traefik/traefik.yaml
 bashio::log.info "Static config generated"
 
 bashio::log.info "Extracting environment variables..."
-ENV_VARS=$(j2 /etc/traefik/env.j2 /data/options.json)
+ENV_VARS=$(gomplate -d options=/data/options.json -i '{{ range (ds "options").env_vars }}{{ . }} {{ end }}')
 
 if [ -z "$ENV_VARS" ]; then
     bashio::log.info "No additional environment variables found"
