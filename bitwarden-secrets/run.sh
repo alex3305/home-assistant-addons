@@ -1,13 +1,13 @@
 #!/usr/bin/env bashio
 
-SECRETS_FILE=/config/secrets2.yaml
+SECRETS_FILE=/config/secrets.yaml
 
 BW_SERVER=$(bashio::config 'bitwarden.server')
 BW_USERNAME=$(bashio::config 'bitwarden.username')
 BW_PASSWORD=$(bashio::config 'bitwarden.password')
 BW_ORGANIZATION=$(bashio::config 'bitwarden.organization')
 
-REPEAT_ACTIVE=$(bashio::config 'repeat.active')
+REPEAT_ACTIVE=$(bashio::config 'repeat.enabled')
 REPEAT_INTERVAL=$(bashio::config 'repeat.interval')
 
 function generate_secrets {

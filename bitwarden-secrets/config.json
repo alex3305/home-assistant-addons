@@ -1,5 +1,5 @@
 {
-    "name": "Bitwarden Secrets",
+    "name": "Bitwarden secrets for Home Assistant",
     "version": "0.0.1",
     "slug": "bw-cli-secrets",
     "description": "Manage Home Assistant secrets easily from Bitwarden's CLI.",
@@ -27,7 +27,7 @@
             "organization": "Home Assistant"
         },
         "repeat": {
-            "active": false,
+            "enabled": false,
             "interval": 300
         }
     },
@@ -40,7 +40,7 @@
             "organization": "str"
         },
         "repeat": {
-            "active": "bool",
+            "enabled": "bool",
             "interval": "int"
         }
     }
