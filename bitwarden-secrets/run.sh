@@ -11,7 +11,7 @@ BW_USERNAME=$(bashio::config 'bitwarden.username')
 BW_PASSWORD=$(bashio::config 'bitwarden.password')
 BW_ORGANIZATION=$(bashio::config 'bitwarden.organization')
 
-REPEAT_ACTIVE=$(bashio::config 'repeat.active')
+REPEAT_ENABLED=$(bashio::config 'repeat.enabled')
 REPEAT_INTERVAL=$(bashio::config 'repeat.interval')
 
 #
@@ -112,7 +112,7 @@ while true; do
     generate_secret_files
     bashio::log.info "Secret files created."
 
-    if [ ! "${REPEAT_ACTIVE}" == "true" ]; then
+    if [ ! "${REPEAT_ENABLED}" == "true" ]; then
         logout
         exit 0
     fi
