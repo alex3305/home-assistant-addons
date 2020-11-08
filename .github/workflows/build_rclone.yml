@@ -7,6 +7,8 @@ on:
   push:
     paths:
       - 'rclone/**'
+    branches:
+      - master
   pull_request:
     paths:
       - 'rclone/**'
