@@ -84,12 +84,17 @@ function generate_secrets {
 function generate_secret_files {
     for row in $(bw list items --organizationid ${BW_ORG_ID} | jq -c '.[] | select(.type == 2) | [.name, (.notes|@base64)]')
     do
-        filename=$(echo $row | jq -r '.[0]')
+        file=$(echo $row | jq -r '.[0]')
+        dirname=$(dirname $file)
+        basename=$(basename $file)
+        
         contents=$(echo $row | jq -r '.[1] | @base64d')
         
-        rm -f ${filename}
-        echo ${contents} > "/config/${filename}"
-        chmod go-wrx "/config/${filename}"
+        mkdir -p /config/${dirname}
+        rm -f /config/${dirname}/${basename}
+        
+        echo ${contents} > "/config/${dirname}/${basename}"
+        chmod go-wrx "/config/${dirname}/${basename}"
     done
 }
 
