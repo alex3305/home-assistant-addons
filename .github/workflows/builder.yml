@@ -25,10 +25,6 @@ jobs:
       - name: Check out the repository
         uses: actions/checkout@v2
 
-      - name: Get changed files
-        id: changed_files
-        uses: jitterbit/get-changed-files@v1
-
       - name: Get add-ons
         id: addons
         run: |
@@ -41,7 +37,6 @@ jobs:
   build:
     needs: init
     runs-on: ubuntu-latest
-    if: needs.init.outputs.changed == 'true'
     name: Build ${{ matrix.arch }} ${{ matrix.addon }} add-on
     strategy:
       matrix: 
