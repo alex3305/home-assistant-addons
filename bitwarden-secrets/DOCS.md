@@ -13,7 +13,7 @@ Follow these steps to get the add-on installed on your system:
 
 ## How to use
 
-You will need to have a Bitwarden account to use. It is also recommended that you use the [Bitwarden Add-on](https://github.com/home-assistant-addons/addon-bitwarden) for Home Assistant for easy local access to all your secrets.
+You will need to have a Bitwarden account to use. It is also recommended that you use the [Bitwarden Add-on](https://github.com/hassio-addons/addon-bitwarden) for Home Assistant for easy local access to all your secrets.
 
 > _See my personal [Bitwarden set up](https://alex3305.github.io/home-assistant-docs/add-ons/bitwarden/) for more information regarding the Bitwarden setup._
 
