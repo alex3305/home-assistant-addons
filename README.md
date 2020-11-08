@@ -11,7 +11,6 @@ This repository contains my peronal, but free to use [Home Assistant Add-ons](ht
 
 ## Add-ons
 
-* [Ansible Vault](ansible-vault/README.md) **(DEPRECATED)**
 * [Bitwarden secrets](bitwarden-secrets/README.md)
 * [Rclone](rclone/README.md)
 * [Traefik](traefik/README.md)

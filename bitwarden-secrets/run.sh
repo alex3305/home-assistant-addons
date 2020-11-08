@@ -88,12 +88,10 @@ function generate_secret_files {
         dirname=$(dirname $file)
         basename=$(basename $file)
         
-        contents=$(echo $row | jq -r '.[1] | @base64d')
-        
         mkdir -p /config/${dirname}
         rm -f /config/${dirname}/${basename}
         
-        echo ${contents} > "/config/${dirname}/${basename}"
+        echo ${row} | jq -r '.[1] | @base64d' > "/config/${dirname}/${basename}"
         chmod go-wrx "/config/${dirname}/${basename}"
     done
 }
