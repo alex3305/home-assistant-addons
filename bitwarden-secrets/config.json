@@ -15,11 +15,7 @@
     "url": "https://alxx.nl/home-assistant-addons/tree/master/bitwarden-secrets",
     "hassio_role": "default",
     "hassio_api": true,
-    "map": [
-        "config:rw",
-        "share:rw",
-        "ssl:rw"
-    ],
+    "map": ["config:rw"],
     "options": {
         "log_level": "info",
         "bitwarden": {
