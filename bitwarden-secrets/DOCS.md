@@ -1,5 +1,7 @@
 # Unofficial Home Assistant Add-ons: Bitwarden secrets for Home Assistant
 
+![Bitwarden Secrets for Home Assistant logo](logo.png)
+
 Easily manage your Home Assistant secrets from Bitwarden.
 
 ## Installation
