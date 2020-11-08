@@ -15,15 +15,16 @@ Follow these steps to get the add-on installed on your system:
 
 You will need to have a Bitwarden account to use. It is also recommended that you use the [Bitwarden Add-on](https://github.com/hassio-addons/addon-bitwarden) for Home Assistant for easy local access to all your secrets.
 
-When you use a local Bitwarden installation you can also create a local Bitwarden user to use with Home Assistant. You can than share items through a (required) organization. This is easier and also safer than sharing your personal credentials with Home Assistant.
+> _See my personal [Bitwarden set up](USAGE.md) for more information regarding the Bitwarden setup._
 
 ### Bitwarden management
 
-For every **Login** item the Username and Password are leveraged into key-value pairs that are parsed into yaml. For instance:
+For every **Login** item the _Username_ and _Password_ fields are leveraged into key-value pairs that are parsed into yaml. For instance:
 
 | Item | Username | Password |
 | ---- | -------- | -------- |
 | My Super Secret API Key | some_api_key | 1Wp08FwDFa4aEP39 |
+| MariaDB password | mariadb_password | this-is-my-hassio-password! |
 
 is parsed into:
 
@@ -31,6 +32,32 @@ is parsed into:
 # Home Assistant secrets file, managed by Bitwarden.
 
 some_api_key: 1Wp08FwDFa4aEP39
+mariadb_password: this-is-my-hassio-password!
+```
+
+> _**NOTE** YAML formatting still applies!_
+
+Besides creating a `secrets.yaml` file, you can also easily manage secret files. For every for **Note** item in the Bitwarden vault, a secret file will be created from the _Name_ with the _Note contents_. For instance:
+
+| Item | Note contents (partial) |
+| ---- | ----------------------- |
+| google_assistant_service_key.json | `{"type": "service_account","project_id": "my-google-assistant-project-1273"...` |
+
+is parsed into `google_assistant_service_key.json` in your Home Assistant configuration directory with the contents:
+
+```json
+{
+  "type": "service_account",
+  "project_id": "my-google-assistant-project-1273",
+  "private_key_id": "priv-key-id",
+  "private_key": "-----BEGIN PRIVATE KEY-----\n[REDACTED]\n-----END PRIVATE KEY-----\n",
+  "client_email": "homeassistant@my-google-assistant-project-1273.iam.gserviceaccount.com",
+  "client_id": "13743492346842924234",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/my-google-assistant-project-1273.iam.gserviceaccount.com"
+}
 ```
 
 ## Configuration
