@@ -12,7 +12,7 @@
     ],
     "startup": "system",
     "boot": "auto",
-    "url": "https://alxx.nl/home-assistant-addons/tree/bitwarden-secrets/traefik",
+    "url": "https://alxx.nl/home-assistant-addons/tree/master/bitwarden-secrets",
     "hassio_role": "default",
     "hassio_api": true,
     "map": [

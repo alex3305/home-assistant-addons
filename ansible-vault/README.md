@@ -1,6 +1,8 @@
-# Unofficial Home Assistant Add-ons: Ansible Vault
+# Unofficial Home Assistant Add-ons: Ansible Vault (DEPRECATED)
 
 Ansible Vault bundled as an Home Assistant add-on.
+
+> _**NOTE** This add-on is deprecated and will not be updated. Please use [Bitwarden secrets for Home Assistant](https://alxx.nl/home-assistant-addons/tree/master/bitwarden-secrets) instead._
 
 ## About
 
