@@ -5,7 +5,6 @@ name: Build add-on repository
 
 env:
   BUILD_ARGS: "--test"
-  MONITORED_FILES: "apparmor.txt build.json config.json Dockerfile data rootfs"
 
 on:
   pull_request:
@@ -18,9 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Initialize builds
     outputs:
-      changed_files: ${{ steps.changed_files.outputs.all }}
-      changed_addons: ${{ steps.changed_addons.outputs.addons }}
-      changed: ${{ steps.changed_addons.outputs.changed }}
+      addons: ${{ steps.addons.outputs.addons }}
     steps:
       - name: Check out the repository
         uses: actions/checkout@v2
