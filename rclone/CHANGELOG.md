@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.0.1
+
+* Updated rclone to 1.53.2
+
 ## 3.0.0
 
 * Migrated to use S6 init system
