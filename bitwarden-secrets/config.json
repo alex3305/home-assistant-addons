@@ -16,7 +16,9 @@
     "hassio_role": "default",
     "hassio_api": true,
     "map": [
-        "config:rw"
+        "config:rw",
+        "share:rw",
+        "ssl:rw"
     ],
     "options": {
         "log_level": "info",
