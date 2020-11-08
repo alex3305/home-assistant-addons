@@ -1,0 +1,30 @@
+name: 'Build and test Traefik'
+
+env:
+  ADD_ON_DIRECTORY: traefik
+
+on: 
+  push:
+    paths:
+      - 'traefik/**'
+  pull_request:
+    paths:
+      - 'traefik/**'
+
+jobs:
+  build:
+    name: Test build Traefik
+    runs-on: ubuntu-latest
+    steps:    
+      - name: Checkout the repository
+        uses: actions/checkout@v2
+    
+      - name: Test build
+        uses: home-assistant/builder@master
+        with:
+          args: |
+            --test \
+            --all \
+            --target /data/${ADD_ON_DIRECTORY} \
+            --docker-hub alex3305 \
+            --image ${ADD_ON_DIRECTORY}-add-on

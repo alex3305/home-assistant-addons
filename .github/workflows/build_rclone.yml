@@ -1,0 +1,30 @@
+name: 'Build and test rclone'
+
+env:
+  ADD_ON_DIRECTORY: rclone
+
+on: 
+  push:
+    paths:
+      - 'rclone/**'
+  pull_request:
+    paths:
+      - 'rclone/**'
+
+jobs:
+  build:
+    name: Test build rclone
+    runs-on: ubuntu-latest
+    steps:    
+      - name: Checkout the repository
+        uses: actions/checkout@v2
+    
+      - name: Test build
+        uses: home-assistant/builder@master
+        with:
+          args: |
+            --test \
+            --all \
+            --target /data/${ADD_ON_DIRECTORY}/ \
+            --docker-hub alex3305 \
+            --image ${ADD_ON_DIRECTORY}-add-on
