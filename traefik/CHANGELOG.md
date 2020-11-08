@@ -1,5 +1,9 @@
 # Changelog
 
+## 4.0.1
+
+* Updated Traefik to 2.3.2
+
 ## 4.0.0
 
 * Migrated to use S6 init system
