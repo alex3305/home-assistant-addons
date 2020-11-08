@@ -6,7 +6,7 @@
     "arch": ["armhf", "armv7", "amd64", "aarch64", "i386"],
     "startup": "once",
     "boot": "manual",
-    "url": "https://alxx.nl/hassio-addons/tree/master/rclone",
+    "url": "https://alxx.nl/home-assistant-addons/tree/master/rclone",
     "hassio_role": "default",
     "hassio_api": true,
     "map": [

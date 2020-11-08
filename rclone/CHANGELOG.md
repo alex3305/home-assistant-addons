@@ -4,7 +4,7 @@
 
 * Migrated to use S6 init system
 * Added support for all arch types (`armhf`, `armv7`, `amd64`, `aarch64`, `i386`)
-* Added Hassio role / api access to remove an error from startup [hassio-addons/addon-base](https://github.com/hassio-addons/addon-base/issues/41)
+* Added Hassio role / api access to remove an error from startup [home-assistant-addons/addon-base](https://github.com/home-assistant-addons/addon-base/issues/41)
 
 ## 2.0.2
 

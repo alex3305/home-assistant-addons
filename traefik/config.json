@@ -6,7 +6,7 @@
     "arch": ["armhf", "armv7", "amd64", "aarch64", "i386"],
     "startup": "system",
     "boot": "auto",
-    "url": "https://alxx.nl/hassio-addons/tree/master/traefik",
+    "url": "https://alxx.nl/home-assistant-addons/tree/master/traefik",
     "ports": {
         "80/tcp": 80,
         "443/tcp": 443

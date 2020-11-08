@@ -7,13 +7,13 @@ Easily manage your Home Assistant secrets from Bitwarden.
 Follow these steps to get the add-on installed on your system:
 
 1. Navigate in your Home Assistant frontend to __Supervisor -> Add-on Store__
-2. Add this new repository by URL (`https://github.com/alex3305/hassio-addons`)
+2. Add this new repository by URL (`https://github.com/alex3305/home-assistant-addons`)
 3. Find the "Bitwarden secrets for Home Assistant" add-on and click it.
 4. Click on the "INSTALL" button
 
 ## How to use
 
-You will need to have a Bitwarden account to use. It is also recommended that you use the [Bitwarden Add-on](https://github.com/hassio-addons/addon-bitwarden) for Home Assistant for easy local access to all your secrets.
+You will need to have a Bitwarden account to use. It is also recommended that you use the [Bitwarden Add-on](https://github.com/home-assistant-addons/addon-bitwarden) for Home Assistant for easy local access to all your secrets.
 
 > _See my personal [Bitwarden set up](https://alex3305.github.io/home-assistant-docs/add-ons/bitwarden/) for more information regarding the Bitwarden setup._
 
@@ -24,7 +24,7 @@ For every **Login** item the _Username_ and _Password_ fields are leveraged into
 | Item | Username | Password |
 | ---- | -------- | -------- |
 | My Super Secret API Key | some_api_key | 1Wp08FwDFa4aEP39 |
-| MariaDB password | mariadb_password | this-is-my-hassio-password! |
+| MariaDB password | mariadb_password | this-is-my-database-password! |
 
 is parsed into:
 
@@ -32,7 +32,7 @@ is parsed into:
 # Home Assistant secrets file, managed by Bitwarden.
 
 some_api_key: 1Wp08FwDFa4aEP39
-mariadb_password: this-is-my-hassio-password!
+mariadb_password: this-is-my-database-password!
 ```
 
 > _**NOTE** YAML formatting still applies!_

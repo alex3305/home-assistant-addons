@@ -7,7 +7,7 @@ Ansible Vault bundled as an Home Assistant add-on.
 Follow these steps to get the add-on installed on your system:
 
 1. Navigate in your Home Assistant frontend to __Supervisor -> Add-on Store__
-2. Add this new repository by URL (`https://github.com/alex3305/hassio-addons`)
+2. Add this new repository by URL (`https://github.com/alex3305/home-assistant-addons`)
 3. Find the "Ansible Vault" add-on and click it.
 4. Click on the "INSTALL" button
 

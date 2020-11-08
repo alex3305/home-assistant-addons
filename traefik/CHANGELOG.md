@@ -3,7 +3,7 @@
 ## 4.0.0
 
 * Migrated to use S6 init system
-* Added Hassio role / api access to remove an error from startup [hassio-addons/addon-base](https://github.com/hassio-addons/addon-base/issues/41)
+* Added Hassio role / api access to remove an error from startup [home-assistant-addons/addon-base](https://github.com/home-assistant-addons/addon-base/issues/41)
 * **[BREAKING]** converted log level to lowercase
 
 ## 3.2.0
@@ -25,10 +25,10 @@
 
 ## 3.0.4
 
-* Merged PR [#12](https://github.com/alex3305/hassio-addons/pull/12) from [leakypixel](https://github.com/leakypixel)
+* Merged PR [#12](https://github.com/alex3305/home-assistant-addons/pull/12) from [leakypixel](https://github.com/leakypixel)
     * Added custom DNS resolvers for LAN networks
     * Added `letsencrypt.delayBeforeCheck` option
-* Merged PR [#11](https://github.com/alex3305/hassio-addons/pull/11) from [leakypixel](https://github.com/leakypixel)
+* Merged PR [#11](https://github.com/alex3305/home-assistant-addons/pull/11) from [leakypixel](https://github.com/leakypixel)
     * Added Raspberry Pi (arm) support
 
 ## 3.0.3
