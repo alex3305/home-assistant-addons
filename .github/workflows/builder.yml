@@ -27,7 +27,7 @@ jobs:
         run: |
           declare -a addons
           for addon in $(find ./ -name config.json | cut -d "/" -f2 | sort -u); do
-            addons+=("$addon");
+            addons+=("\"${addon}\",");
           done
           echo "::set-output name=addons::${addons[@]}"
 
