@@ -17,6 +17,8 @@ Follow these steps to get the add-on installed on your system:
 
 You will need to have a Bitwarden account to use. It is also recommended that you use the [Bitwarden Add-on](https://github.com/hassio-addons/addon-bitwarden) for Home Assistant for easy local access to all your secrets.
 
+> _**WARNING** Running this add-on will overwrite your `secrets.yaml` file and other secret files you retrieve from Bitwarden! Make a snapshot/backup of your Home Assistant configuration before proceeding._
+
 > _See my personal [Bitwarden set up](https://alex3305.github.io/home-assistant-docs/add-ons/bitwarden/) for more information regarding the Bitwarden setup._
 
 ### Bitwarden management
