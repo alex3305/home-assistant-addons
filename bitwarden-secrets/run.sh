@@ -14,6 +14,8 @@ BW_ORGANIZATION=$(bashio::config 'bitwarden.organization')
 REPEAT_ENABLED=$(bashio::config 'repeat.enabled')
 REPEAT_INTERVAL=$(bashio::config 'repeat.interval')
 
+USE_USERNAME_AS_KEY=$(bashio::config 'use_username_as_key')
+
 #
 # Script functions
 #
@@ -71,11 +73,27 @@ function generate_secrets {
     touch ${SECRETS_FILE}
     printf "# Home Assistant secrets file, managed by Bitwarden.\n\n" >> ${SECRETS_FILE}
 
-    for row in $(bw list items --organizationid ${BW_ORG_ID} | jq -c '.[] | select(.type == 1) | [(.login.username|@base64), (.login.password|@base64)]')
+    for row in $(bw list items --organizationid ${BW_ORG_ID} | jq -c '.[] | select(.type == 1) | [(.name|@base64), (.login.username|@base64), (.login.password|@base64)]')
     do
-        key=$(echo $row | jq -r '.[0] | @base64d')
-        value=$(echo $row | jq -r '.[1] | @base64d')
-        echo "${key}: ${value}" >> ${SECRETS_FILE}
+        name=$(echo $row | jq -r '.[0] | @base64d' | tr '[]{}#*!|>?:&,%@- ' '_' | tr -s '_' | tr '[:upper:]' '[:lower:]')
+        username=$(echo $row | jq -r '.[1] | @base64d')
+        password=$(echo $row | jq -r '.[2] | @base64d')
+        bashio::log.trace "Parsed ${name}, ${username} and ${password}"
+
+        if [ ! "${USE_USERNAME_AS_KEY}" == "true" ]; then
+            if [ ! "${username}" == "null" ]; then
+                bashio::log.trace "Writing ${name} with ${username}"
+                echo "${name}_username: '${username}'" >> ${SECRETS_FILE}
+            fi
+
+            if [ ! "${password}" == "null" ]; then
+                bashio::log.trace "Writing ${name} with ${password}"
+                echo "${name}_password: '${password}'" >> ${SECRETS_FILE}
+            fi
+        else
+            bashio::log.trace "Writing ${username} with ${password}"
+            echo "${username}: ${password}" >> ${SECRETS_FILE}
+        fi
     done
 
     chmod go-wrx ${SECRETS_FILE}

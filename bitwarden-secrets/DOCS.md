@@ -23,23 +23,26 @@ You will need to have a Bitwarden account to use. It is also recommended that yo
 
 ### Bitwarden management
 
-For every **Login** item the _Username_ and _Password_ fields are leveraged into key-value pairs that are parsed into yaml. For instance:
+For every **Login** item the _Username_ and _Password_ fields are leveraged into secrets that are parsed into yaml. For instance:
 
 | Item | Username | Password |
 | ---- | -------- | -------- |
-| My Super Secret API Key | some_api_key | 1Wp08FwDFa4aEP39 |
-| MariaDB password | mariadb_password | this-is-my-database-password! |
+| My Super Secret API Key |  | 1Wp08FwDFa4aEP39 |
+| MariaDB | mariadb_user | this-is-my-database-password! |
 
 is parsed into:
 
 ```yaml
 # Home Assistant secrets file, managed by Bitwarden.
 
-some_api_key: 1Wp08FwDFa4aEP39
-mariadb_password: this-is-my-database-password!
+my_super_secret_api_key_password: '1Wp08FwDFa4aEP39'
+mariadb_username: 'mariadb_user'
+mariadb_password: 'this-is-my-database-password!'
 ```
 
 > _**NOTE** YAML formatting still applies!_
+
+> _**NOTE** Refrain from using control characters inside item names._
 
 Besides creating a `secrets.yaml` file, you can also easily manage secret files. For every for **Note** item in the Bitwarden vault, a secret file will be created from the _Name_ with the _Note contents_. For instance:
 
@@ -64,6 +67,8 @@ is parsed into `google_assistant_service_key.json` in your Home Assistant config
 }
 ```
 
+> _**NOTE** Subdirectories are support with forward slashes (ie. `config/rclone.conf`). The directories are created when necessary._
+
 ## Configuration
 
 ```yaml
@@ -76,6 +81,7 @@ bitwarden:
 repeat:
   active: false
   interval: 300
+use_username_as_key: false
 ```
 
 ### Option `log_level` (required)
@@ -119,3 +125,7 @@ When `true` this enables automatic refreshing of your secrets.
 ### Option `repeat.interval` (required)
 
 Interval, in seconds, to refresh your secrets from Bitwarden.
+
+### Option `use_username_as_key` (required)
+
+When set to `true` the username of an item will be set as a key in `secrets.yaml`, when omitted or set to `false` the item name will be used as a key. 
