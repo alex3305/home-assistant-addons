@@ -9,7 +9,7 @@
 * 🆕 For each username in an item, an entry will be created: `item_name_username`
 * 🆕 For each password in an item, an entry will be created: `item_name_password`
 * 🆕 Also retained the old functionality with a feature flag
-* 🐞 Added single quotes to YAML values in `secrets.yaml`
+* 🐞 Fix: Added single quotes to YAML values in `secrets.yaml`
 
 ## 1.0.3
 

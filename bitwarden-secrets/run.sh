@@ -75,7 +75,7 @@ function generate_secrets {
 
     for row in $(bw list items --organizationid ${BW_ORG_ID} | jq -c '.[] | select(.type == 1) | [(.name|@base64), (.login.username|@base64), (.login.password|@base64)]')
     do
-        name=$(echo $row | jq -r '.[0] | @base64d' | tr '[]{}#*!|>?:&,%@- ' '_' | tr -s '_' | tr '[:upper:]' '[:lower:]')
+        name=$(echo $row | jq -r '.[0] | @base64d' | tr '?:&,%@-' ' ' | tr '[]{}#*!|> ' '_' | tr -s '_' | tr '[:upper:]' '[:lower:]')
         username=$(echo $row | jq -r '.[1] | @base64d')
         password=$(echo $row | jq -r '.[2] | @base64d')
         bashio::log.trace "Parsed ${name}, ${username} and ${password}"
@@ -92,7 +92,7 @@ function generate_secrets {
             fi
         else
             bashio::log.trace "Writing ${username} with ${password}"
-            echo "${username}: ${password}" >> ${SECRETS_FILE}
+            echo "${username}: '${password}'" >> ${SECRETS_FILE}
         fi
     done
 
