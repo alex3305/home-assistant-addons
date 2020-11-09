@@ -106,12 +106,16 @@ set_org_id
 
 while true; do
     login_check
+
+    bashio::log.debug "Syncing Bitwarden vault..."
+    bw sync &>/dev/null
+    bashio::log.info "Bitwarden vault synced at: $(bw sync --last)"
     
-    bashio::log.info "Generating secrets file from logins..."
+    bashio::log.debug "Generating secrets file from logins..."
     generate_secrets
     bashio::log.info "Home Assistant secrets created."
     
-    bashio::log.info "Generating secret files from notes..."
+    bashio::log.debug "Generating secret files from notes..."
     generate_secret_files
     bashio::log.info "Secret files created."
 

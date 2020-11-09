@@ -5,5 +5,8 @@
         "armv7": "hassioaddons/base",
         "aarch64": "hassioaddons/base",
         "i386": "hassioaddons/base"
+    },
+    "args": {
+        "BW_CLI_VERSION": "1.12.1"
     }
 }

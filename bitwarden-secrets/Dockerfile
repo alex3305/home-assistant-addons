@@ -2,10 +2,13 @@ ARG BUILD_FROM
 
 FROM $BUILD_FROM
 
+ARG BW_CLI_VERSION
+
 COPY run.sh /
 
 RUN apk add --no-cache jq npm && \
-    npm install -g --no-progress @bitwarden/cli && \
+    npm install --no-progress --no-audit -g @bitwarden/cli@${BW_CLI_VERSION} && \
+    apk del --no-cache npm && \
     chmod +x run.sh
 
 CMD [ "/run.sh" ]
