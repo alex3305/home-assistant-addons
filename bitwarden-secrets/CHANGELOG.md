@@ -1,5 +1,23 @@
 # Changelog
 
+## 1.2.0
+
+* 🆕 Added support for Bitwarden custom fields
+    * Special characters (`[]{}#*!|>?:&,%@- `) will be replaced with an underscore
+    * Repeated underscores will be replaced with a single occurrence
+    * The custom field name will be converted to lowercase
+* 🆕 Added support for Bitwarden URI's
+* 🆕 Added more debug logging
+* 🐞 Bugifx: Made `repeat.interval` optional in config.
+* ❗ Deprecated `use_username_as_key`, this option will be removed in version 1.4.0.
+
+## 1.1.1
+
+* 🆕 Added support for custom `secrets.yaml` location. This is espcially useful for testing and debugging.
+* 🐞 Bugfix: Fixed upper to lower case conversion on field names
+* 🐞 Bugfix: Prevent initial double Bitwarden check for login and Bitwarden sync
+* Reworked logic inside the startup script, preparing for new functionality.
+
 ## 1.1.0
 
 * 🆕 Added ability to use item names as secret keys after [community input](https://reddit.com/r/homeassistant/comments/jqw4gf/addon_release_bitwarden_secrets_for_home_assistant/?ref=share&ref_source=link)

@@ -4,15 +4,32 @@
 # Global variables
 #
 
-SECRETS_FILE=/config/secrets.yaml
-
 BW_SERVER=$(bashio::config 'bitwarden.server')
 BW_USERNAME=$(bashio::config 'bitwarden.username')
 BW_PASSWORD=$(bashio::config 'bitwarden.password')
 BW_ORGANIZATION=$(bashio::config 'bitwarden.organization')
 
-REPEAT_ENABLED=$(bashio::config 'repeat.enabled')
-REPEAT_INTERVAL=$(bashio::config 'repeat.interval')
+if bashio::config.true 'repeat.enabled'; then
+    REPEAT_ENABLED="true"
+    REPEAT_INTERVAL=$(bashio::config 'repeat.interval')
+    bashio::log.debug "Repeat enabled with interval ${REPEAT_INTERVAL}."
+else
+    REPEAT_ENABLED="false"
+fi
+
+if bashio::config.exists 'secrets_file'; then
+    SECRETS_FILE="/config/$(bashio::config 'secrets_file')"
+    bashio::log.debug "Custom secrets file set to ${SECRETS_FILE}."
+else
+    SECRETS_FILE="/config/secrets.yaml"
+fi
+
+if bashio::config.exists 'use_username_as_key' && bashio::config.true 'use_username_as_key'; then
+    USE_USERNAME_AS_KEY="true"
+    bashio::log.debug "Option use_username_as_key enabled."
+else
+    USE_USERNAME_AS_KEY="false"
+fi
 
 USE_USERNAME_AS_KEY=$(bashio::config 'use_username_as_key')
 
@@ -73,27 +90,32 @@ function generate_secrets {
     touch ${SECRETS_FILE}
     printf "# Home Assistant secrets file, managed by Bitwarden.\n\n" >> ${SECRETS_FILE}
 
-    for row in $(bw list items --organizationid ${BW_ORG_ID} | jq -c '.[] | select(.type == 1) | [(.name|@base64), (.login.username|@base64), (.login.password|@base64)]')
-    do
-        name=$(echo $row | jq -r '.[0] | @base64d' | tr '?:&,%@-' ' ' | tr '[]{}#*!|> ' '_' | tr -s '_' | tr '[:upper:]' '[:lower:]')
-        username=$(echo $row | jq -r '.[1] | @base64d')
-        password=$(echo $row | jq -r '.[2] | @base64d')
-        bashio::log.trace "Parsed ${name}, ${username} and ${password}"
+    for row in $(bw list items --organizationid ${BW_ORG_ID} | jq -c '.[] | select(.type == 1) | (.|@base64)'); do
+        row_contents=$(echo ${row} | jq -r '@base64d')
 
-        if [ ! "${USE_USERNAME_AS_KEY}" == "true" ]; then
-            if [ ! "${username}" == "null" ]; then
-                bashio::log.trace "Writing ${name} with ${username}"
-                echo "${name}_username: '${username}'" >> ${SECRETS_FILE}
-            fi
+        # This is the old style of parsing and writing secrets (DEPRECATED).
+        if bashio::var.true ${USE_USERNAME_AS_KEY}; then
+            username=$(echo $row_contents | jq -r '.login.username')
+            password=$(echo $row_contents | jq -r '.login.password')
 
-            if [ ! "${password}" == "null" ]; then
-                bashio::log.trace "Writing ${name} with ${password}"
-                echo "${name}_password: '${password}'" >> ${SECRETS_FILE}
+            if [ "${username}" != "null" ] && [ "${password}" != "null" ]; then
+                bashio::log.debug "Writing ${username} with ${password}"
+                echo "${username}: ${password}" >> ${SECRETS_FILE}
             fi
-        else
-            bashio::log.trace "Writing ${username} with ${password}"
-            echo "${username}: '${password}'" >> ${SECRETS_FILE}
+            
+            continue
         fi
+
+        name=$(echo $row_contents | jq -r '.name' | tr '?:&,%@-' ' ' | tr '[]{}#*!|> ' '_' | tr -s '_' | tr '[:upper:]' '[:lower:]')
+        
+        write_field "${name}" "${row_contents}" ".login.username" "username"
+        write_field "${name}" "${row_contents}" ".login.password" "password"
+        write_field "${name}" "${row_contents}" ".notes" "notes"
+
+        write_uris "${name}" "${row_contents}"
+        write_custom_fields "${name}" "${row_contents}"
+
+        bashio::log.trace "ROW: ${row_contents}"
     done
 
     chmod go-wrx ${SECRETS_FILE}
@@ -114,6 +136,59 @@ function generate_secret_files {
     done
 }
 
+function write_field {
+    secret_name=${1}
+    row_contents=${2}
+    field_name=${3}
+    suffix=${4}
+
+    bashio::log.trace "Parsing row ${row_contents}"
+    field="$(echo ${row_contents} | jq -r ${field_name})"
+    
+    if [ "${field}" != "null" ]; then
+        bashio::log.debug "Writing ${secret_name}_${suffix} with ${field}"
+        echo "${secret_name}_${suffix}: '${field}'" >> ${SECRETS_FILE}
+    fi
+}
+
+function write_uris {
+    secret_name=${1}
+    row_contents=${2}
+
+    if [ "$(echo ${row_contents} | jq -r '.login.uris | length')" -gt "0" ]; then
+        i=1
+        
+        for uris in $(echo ${row_contents} | jq -c '.login.uris | .[] | @base64' ); do
+            uri=$(echo ${uris} | jq -r '@base64d' |  jq -r '.uri')
+
+            if [ "${uri}" != "null" ]; then
+                bashio::log.debug "Writing ${secret_name}_uri_${i} with ${uri}"
+                echo "${secret_name}_uri_${i}: '${uri}'" >> ${SECRETS_FILE}
+                
+                ((i=i+1))
+            fi
+        done
+    fi
+}
+
+function write_custom_fields {
+    secret_name=${1}
+    row_contents=${2}
+
+    if [ "$(echo ${row_contents} | jq -r '.fields | length')" -gt "0" ]; then
+        for fields in $(echo ${row_contents} | jq -c '.fields | .[] | @base64'); do
+            field_contents=$(echo ${fields} | jq -r '@base64d')
+            field_name=$(echo ${field_contents} | jq -r '.name' | tr '?:&,%@-' ' ' | tr '[]{}#*!|> ' '_' | tr -s '_' | tr '[:upper:]' '[:lower:]')
+            field_value=$(echo ${field_contents} | jq -r '.value')
+
+            if [ "${field_name}" != "null" ] && [ "${field_value}" != "null" ]; then
+                bashio::log.debug "Writing ${secret_name}_${field_name} with ${field_value}"
+                echo "${secret_name}_${field_name}: '${field_value}'" >> ${SECRETS_FILE}
+            fi
+        done
+    fi
+}
+
 #
 # Start of main loop
 #
@@ -123,12 +198,6 @@ login
 set_org_id
 
 while true; do
-    login_check
-
-    bashio::log.debug "Syncing Bitwarden vault..."
-    bw sync &>/dev/null
-    bashio::log.info "Bitwarden vault synced at: $(bw sync --last)"
-    
     bashio::log.debug "Generating secrets file from logins..."
     generate_secrets
     bashio::log.info "Home Assistant secrets created."
@@ -137,10 +206,15 @@ while true; do
     generate_secret_files
     bashio::log.info "Secret files created."
 
-    if [ ! "${REPEAT_ENABLED}" == "true" ]; then
+    if [ "${REPEAT_ENABLED}" != "true" ]; then
         logout
         exit 0
     fi
 
     sleep "${REPEAT_INTERVAL}"
+    login_check
+
+    bashio::log.debug "Syncing Bitwarden vault..."
+    bw sync &>/dev/null
+    bashio::log.info "Bitwarden vault synced at: $(bw sync --last)"
 done
