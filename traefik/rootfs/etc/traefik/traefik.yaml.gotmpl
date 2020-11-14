@@ -34,7 +34,7 @@ certificatesResolvers:
   {{- else if eq $options.letsencrypt.challenge_type "dnsChallenge" }}
       dnsChallenge:
         provider: {{ $options.letsencrypt.provider }}
-    {{- if has $options.letsencrypt "delayBeforeCheck" -}}
+    {{- if has $options.letsencrypt "delayBeforeCheck" }}
         delayBeforeCheck: {{ $options.letsencrypt.delayBeforeCheck }}
     {{- end }}
       {{ if and (has $options.letsencrypt "resolvers") (gt (len $options.letsencrypt.resolvers) 0) }}

@@ -1,5 +1,9 @@
 # Changelog
 
+## 4.0.2
+
+* 🐞 Fixed `delayBeforeCheck` option within Traefik template.
+
 ## 4.0.1
 
 * 📈 Updated Traefik to 2.3.2
