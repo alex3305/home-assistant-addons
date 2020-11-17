@@ -37,9 +37,9 @@ certificatesResolvers:
     {{- if has $options.letsencrypt "delayBeforeCheck" }}
         delayBeforeCheck: {{ $options.letsencrypt.delayBeforeCheck }}
     {{- end }}
-      {{ if and (has $options.letsencrypt "resolvers") (gt (len $options.letsencrypt.resolvers) 0) }}
+      {{- if and (has $options.letsencrypt "resolvers") (gt (len $options.letsencrypt.resolvers) 0) }}
         resolvers:
-        {{ range $options.letsencrypt.resolvers -}}
+        {{- range $options.letsencrypt.resolvers }}
           - "{{ . }}"
         {{- end }}
       {{- end }}

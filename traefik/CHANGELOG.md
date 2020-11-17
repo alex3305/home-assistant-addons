@@ -1,8 +1,12 @@
 # Changelog
 
+## 4.0.3
+
+* 🐞 Fixed `letsencrypt.resolvers` option within Traefik template.
+
 ## 4.0.2
 
-* 🐞 Fixed `delayBeforeCheck` option within Traefik template.
+* 🐞 Fixed `letsencrypt.delayBeforeCheck` option within Traefik template.
 
 ## 4.0.1
 
