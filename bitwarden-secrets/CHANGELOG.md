@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.1
+
+* 📈 Updated Bitwarden CLI to 1.13.2
+
 ## 1.2.0
 
 * 🆕 Added support for Bitwarden custom fields
