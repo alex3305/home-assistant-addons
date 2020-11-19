@@ -88,7 +88,8 @@ function set_org_id {
 function generate_secrets {
     rm -f ${SECRETS_FILE}
     touch ${SECRETS_FILE}
-    printf "# Home Assistant secrets file, managed by Bitwarden.\n\n" >> ${SECRETS_FILE}
+    printf "# Home Assistant secrets file\n" >> ${SECRETS_FILE}
+    printf "# DO NOT MODIFY -- Managed by Bitwarden Secrets for Home Assistant add-on\n\n" >> ${SECRETS_FILE}
 
     for row in $(bw list items --organizationid ${BW_ORG_ID} | jq -c '.[] | select(.type == 1) | (.|@base64)'); do
         row_contents=$(echo ${row} | jq -r '@base64d')

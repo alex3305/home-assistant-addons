@@ -33,7 +33,8 @@ For every **Login** item the _Username_ and _Password_ fields are leveraged into
 is parsed into:
 
 ```yaml
-# Home Assistant secrets file, managed by Bitwarden.
+# Home Assistant secrets file
+# DO NOT MODIFY -- Managed by Bitwarden Secrets for Home Assistant add-on
 
 my_super_secret_api_key_password: '1Wp08FwDFa4aEP39'
 mariadb_username: 'mariadb_user'
