@@ -1,5 +1,9 @@
 # Changelog
 
+## 4.0.4
+
+* 📈 Updated Traefik to 2.3.3
+
 ## 4.0.3
 
 * 🐞 Fixed `letsencrypt.resolvers` option within Traefik template.

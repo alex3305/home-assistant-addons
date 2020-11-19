@@ -7,6 +7,6 @@
         "i386": "hassioaddons/base"
     },
     "args": {
-        "TRAEFIK_VERSION": "2.3.2"
+        "TRAEFIK_VERSION": "2.3.3"
     }
 }
