@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.0.3
+
+* 📈 Updated rclone to 1.53.4
+
 ## 3.0.2
 
 * 📈 Updated rclone to 1.53.3
