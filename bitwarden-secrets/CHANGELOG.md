@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.3.0
+
+* 🆕 Do not replace `secrets.yaml` when nothing has changed
+    * This will fix an issue when Home Assistant indicates that it couldn't find a secret
+* 📈 Updated Bitwarden CLI to 1.13.3
+
 ## 1.2.1
 
 * 📈 Updated Bitwarden CLI to 1.13.2

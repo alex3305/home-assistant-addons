@@ -4,6 +4,8 @@
 # Global variables
 #
 
+TEMP_SECRETS_FILE="/tmp/secrets.yaml"
+
 BW_SERVER=$(bashio::config 'bitwarden.server')
 BW_USERNAME=$(bashio::config 'bitwarden.username')
 BW_PASSWORD=$(bashio::config 'bitwarden.password')
@@ -86,10 +88,10 @@ function set_org_id {
 }
 
 function generate_secrets {
-    rm -f ${SECRETS_FILE}
-    touch ${SECRETS_FILE}
-    printf "# Home Assistant secrets file\n" >> ${SECRETS_FILE}
-    printf "# DO NOT MODIFY -- Managed by Bitwarden Secrets for Home Assistant add-on\n\n" >> ${SECRETS_FILE}
+    touch ${TEMP_SECRETS_FILE}
+    
+    printf "# Home Assistant secrets file\n" >> ${TEMP_SECRETS_FILE}
+    printf "# DO NOT MODIFY -- Managed by Bitwarden Secrets for Home Assistant add-on\n\n" >> ${TEMP_SECRETS_FILE}
 
     for row in $(bw list items --organizationid ${BW_ORG_ID} | jq -c '.[] | select(.type == 1) | (.|@base64)'); do
         row_contents=$(echo ${row} | jq -r '@base64d')
@@ -101,7 +103,7 @@ function generate_secrets {
 
             if [ "${username}" != "null" ] && [ "${password}" != "null" ]; then
                 bashio::log.debug "Writing ${username} with ${password}"
-                echo "${username}: ${password}" >> ${SECRETS_FILE}
+                echo "${username}: ${password}" >> ${TEMP_SECRETS_FILE}
             fi
             
             continue
@@ -118,8 +120,6 @@ function generate_secrets {
 
         bashio::log.trace "ROW: ${row_contents}"
     done
-
-    chmod go-wrx ${SECRETS_FILE}
 }
 
 function generate_secret_files {
@@ -148,7 +148,7 @@ function write_field {
     
     if [ "${field}" != "null" ]; then
         bashio::log.debug "Writing ${secret_name}_${suffix} with ${field}"
-        echo "${secret_name}_${suffix}: '${field}'" >> ${SECRETS_FILE}
+        echo "${secret_name}_${suffix}: '${field}'" >> ${TEMP_SECRETS_FILE}
     fi
 }
 
@@ -164,7 +164,7 @@ function write_uris {
 
             if [ "${uri}" != "null" ]; then
                 bashio::log.debug "Writing ${secret_name}_uri_${i} with ${uri}"
-                echo "${secret_name}_uri_${i}: '${uri}'" >> ${SECRETS_FILE}
+                echo "${secret_name}_uri_${i}: '${uri}'" >> ${TEMP_SECRETS_FILE}
                 
                 ((i=i+1))
             fi
@@ -184,7 +184,7 @@ function write_custom_fields {
 
             if [ "${field_name}" != "null" ] && [ "${field_value}" != "null" ]; then
                 bashio::log.debug "Writing ${secret_name}_${field_name} with ${field_value}"
-                echo "${secret_name}_${field_name}: '${field_value}'" >> ${SECRETS_FILE}
+                echo "${secret_name}_${field_name}: '${field_value}'" >> ${TEMP_SECRETS_FILE}
             fi
         done
     fi
@@ -201,7 +201,17 @@ set_org_id
 while true; do
     bashio::log.debug "Generating secrets file from logins..."
     generate_secrets
-    bashio::log.info "Home Assistant secrets created."
+    bashio::log.debug "Home Assistant secrets generated."
+
+    bashio::log.debug "Comparing newly generated secrets..."
+    if cmp -s -- "${TEMP_SECRETS_FILE}" "${SECRETS_FILE}"; then
+        rm -f ${TEMP_SECRETS_FILE}
+        bashio::log.debug "No secrets change detected."
+    else
+        bashio::log.info "Changed from Bitwarden detected, replacing secrets.yaml..."
+        mv -f ${TEMP_SECRETS_FILE} ${SECRETS_FILE}
+        chmod go-wrx ${SECRETS_FILE}
+    fi
     
     bashio::log.debug "Generating secret files from notes..."
     generate_secret_files
