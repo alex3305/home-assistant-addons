@@ -1,47 +1,42 @@
 {
-    "name": "Bitwarden secrets for Home Assistant",
-    "version": "1.3.0",
-    "slug": "bw-cli-secrets",
-    "description": "Manage Home Assistant secrets easily from Bitwarden.",
-    "arch": [
-        "armhf",
-        "armv7",
-        "amd64",
-        "aarch64",
-        "i386"
-    ],
-    "startup": "system",
-    "boot": "auto",
-    "url": "https://alxx.nl/home-assistant-addons/tree/master/bitwarden-secrets",
-    "hassio_role": "default",
-    "hassio_api": true,
-    "map": ["config:rw"],
-    "options": {
-        "log_level": "info",
-        "bitwarden": {
-            "server": "http://a0d7b954-bitwarden",
-            "username": "homeassistant@localhost.lan",
-            "password": "homeassistant",
-            "organization": "Home Assistant"
-        },
-        "repeat": {
-            "enabled": false,
-            "interval": 300
-        }
+  "name": "Bitwarden secrets for Home Assistant",
+  "version": "1.3.0",
+  "slug": "bw-cli-secrets",
+  "description": "Manage Home Assistant secrets easily from Bitwarden.",
+  "arch": ["armhf", "armv7", "amd64", "aarch64", "i386"],
+  "startup": "system",
+  "stage": "stable",
+  "boot": "auto",
+  "url": "https://alxx.nl/home-assistant-addons/tree/master/bitwarden-secrets",
+  "hassio_role": "default",
+  "hassio_api": true,
+  "map": ["config:rw"],
+  "options": {
+    "log_level": "info",
+    "bitwarden": {
+      "server": "http://a0d7b954-bitwarden",
+      "username": "homeassistant@localhost.lan",
+      "password": "homeassistant",
+      "organization": "Home Assistant"
     },
-    "schema": {
-        "log_level": "list(trace|debug|info|notice|warning|error|fatal)",
-        "bitwarden": {
-            "server": "str",
-            "username": "str",
-            "password": "str",
-            "organization": "str"
-        },
-        "repeat": {
-            "enabled": "bool",
-            "interval": "int?"
-        },
-        "secrets_file": "str?",
-        "use_username_as_key": "bool?"
+    "repeat": {
+      "enabled": false,
+      "interval": 300
     }
+  },
+  "schema": {
+    "log_level": "list(trace|debug|info|notice|warning|error|fatal)",
+    "bitwarden": {
+      "server": "str",
+      "username": "str",
+      "password": "str",
+      "organization": "str"
+    },
+    "repeat": {
+      "enabled": "bool",
+      "interval": "int?"
+    },
+    "secrets_file": "str?",
+    "use_username_as_key": "bool?"
+  }
 }

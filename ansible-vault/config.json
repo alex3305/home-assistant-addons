@@ -1,28 +1,25 @@
 {
-    "name": "Ansible Vault",
-    "version": "1.0.0",
-    "slug": "ansible-vault",
-    "description": "Decrypts files with Ansible Vault",
-    "url": "https://alxx.nl/home-assistant-addons/tree/master/ansible-vault",
-    "startup": "once",
-    "arch": ["aarch64", "amd64", "armhf", "armv7", "i386"],
-    "boot": "auto",
-    "map": [
-        "config:rw",
-        "share:rw",
-        "ssl:rw"
-    ],
-    "options": {
-      "log_level": "info",
-      "encrypted_file": "/config/encrypted_secrets.yaml",
-      "output_file": "/config/secrets.yaml",
-      "password": ""
-    },
-    "schema": {
-      "log_level": "list(trace|debug|info|notice|warning|error|fatal)",
-      "encrypted_file": "str",
-      "output_file": "str",
-      "password": "str?",
-      "password_file": "str?"
-    }
+  "name": "Ansible Vault",
+  "version": "1.0.0",
+  "slug": "ansible-vault",
+  "description": "Decrypts files with Ansible Vault",
+  "url": "https://alxx.nl/home-assistant-addons/tree/master/ansible-vault",
+  "startup": "once",
+  "stage": "deprecated",
+  "arch": ["aarch64", "amd64", "armhf", "armv7", "i386"],
+  "boot": "auto",
+  "map": ["config:rw", "share:rw", "ssl:rw"],
+  "options": {
+    "log_level": "info",
+    "encrypted_file": "/config/encrypted_secrets.yaml",
+    "output_file": "/config/secrets.yaml",
+    "password": ""
+  },
+  "schema": {
+    "log_level": "list(trace|debug|info|notice|warning|error|fatal)",
+    "encrypted_file": "str",
+    "output_file": "str",
+    "password": "str?",
+    "password_file": "str?"
+  }
 }

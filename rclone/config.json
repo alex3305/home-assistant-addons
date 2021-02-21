@@ -1,39 +1,36 @@
 {
-    "name": "Rclone",
-    "version": "3.0.3",
-    "slug": "rclone",
-    "description": "Rclone is a command line program to sync files and directories to and from various providers.",
-    "arch": ["armhf", "armv7", "amd64", "aarch64", "i386"],
-    "startup": "once",
-    "boot": "manual",
-    "url": "https://alxx.nl/home-assistant-addons/tree/master/rclone",
-    "hassio_role": "default",
-    "hassio_api": true,
-    "map": [
-        "backup:rw",
-        "config:rw",
-        "share:rw"
-    ],
-    "options": {
-        "configuration_path": "/share/rclone/rclone.conf",
-        "local_retention_days": 60,
-        "remotes": [
-            {
-                "name": "",
-                "path": "/",
-                "retention_days": 14
-            }
-        ]
-    },
-    "schema": {
-        "configuration_path": "str",
-        "local_retention_days": "int",
-        "remotes": [
-            {
-                "name": "str",
-                "path": "str",
-                "retention_days": "int"
-            }
-        ]
-    }
+  "name": "Rclone",
+  "version": "3.0.3",
+  "slug": "rclone",
+  "description": "Rclone is a command line program to sync files and directories to and from various providers.",
+  "arch": ["armhf", "armv7", "amd64", "aarch64", "i386"],
+  "startup": "once",
+  "stage": "stable",
+  "boot": "manual",
+  "url": "https://alxx.nl/home-assistant-addons/tree/master/rclone",
+  "hassio_role": "default",
+  "hassio_api": true,
+  "map": ["backup:rw", "config:rw", "share:rw"],
+  "options": {
+    "configuration_path": "/share/rclone/rclone.conf",
+    "local_retention_days": 60,
+    "remotes": [
+      {
+        "name": "",
+        "path": "/",
+        "retention_days": 14
+      }
+    ]
+  },
+  "schema": {
+    "configuration_path": "str",
+    "local_retention_days": "int",
+    "remotes": [
+      {
+        "name": "str",
+        "path": "str",
+        "retention_days": "int"
+      }
+    ]
+  }
 }
