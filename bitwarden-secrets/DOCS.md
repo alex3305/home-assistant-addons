@@ -82,7 +82,6 @@ bitwarden:
 repeat:
   active: false
   interval: 300
-use_username_as_key: false
 ```
 
 ### Option `log_level` (required)
@@ -130,9 +129,3 @@ Interval, in seconds, to refresh your secrets from Bitwarden. This value is only
 ### option `secret_file` (optional)
 
 Optionally define an alternative secret file to parse the secrets into. Providing this value can be useful for testing and debugging this add-on. This file will still be put inside your Home Assistant configuration directory.
-
-### Option `use_username_as_key` (optional) _(deprecated)_
-
-When set to `true` the username of an item will be set as a key in `secrets.yaml`, when omitted or set to `false` the item name will be used as a key. 
-
-> _**NOTE** Thiw is old behaviour introduced with version 1.0.0 and deprecated as of version 1.3.0._
