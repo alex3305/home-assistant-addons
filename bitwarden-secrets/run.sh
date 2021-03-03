@@ -199,27 +199,32 @@ login
 set_org_id
 
 while true; do
-    bashio::log.debug "Generating secrets file from logins..."
-    generate_secrets
-    bashio::log.debug "Home Assistant secrets generated."
+    num_of_items=$(bw list items --organizationid ${BW_ORG_ID} | jq length)
 
-    bashio::log.debug "Comparing newly generated secrets..."
-    if cmp -s -- "${TEMP_SECRETS_FILE}" "${SECRETS_FILE}"; then
-        rm -f ${TEMP_SECRETS_FILE}
-        bashio::log.debug "No secrets change detected."
+    if [ ${num_of_items} -gt 0 ]; then
+        bashio::log.debug "Generating secrets.yaml file from login entries..."
+        generate_secrets
+        bashio::log.debug "Home Assistant secrets generated."
+
+        bashio::log.debug "Comparing newly generated secrets to secrets.yaml..."
+        if cmp -s -- "${TEMP_SECRETS_FILE}" "${SECRETS_FILE}"; then
+            rm -f ${TEMP_SECRETS_FILE}
+            bashio::log.debug "No secrets changes detected."
+        else
+            bashio::log.info "Changed from Bitwarden detected, replacing secrets.yaml..."
+            mv -f ${TEMP_SECRETS_FILE} ${SECRETS_FILE}
+            chmod go-wrx ${SECRETS_FILE}
+        fi
+        
+        bashio::log.debug "Generating secret files from notes..."
+        generate_secret_files
+        bashio::log.info "Secret files created."
     else
-        bashio::log.info "Changed from Bitwarden detected, replacing secrets.yaml..."
-        mv -f ${TEMP_SECRETS_FILE} ${SECRETS_FILE}
-        chmod go-wrx ${SECRETS_FILE}
+        bashio::log.warn "No secrets found in your organisation. Skipping creation..."
     fi
-    
-    bashio::log.debug "Generating secret files from notes..."
-    generate_secret_files
-    bashio::log.info "Secret files created."
 
     if [ "${REPEAT_ENABLED}" != "true" ]; then
-        logout
-        exit 0
+        break
     fi
 
     sleep "${REPEAT_INTERVAL}"
@@ -229,3 +234,6 @@ while true; do
     bw sync &>/dev/null
     bashio::log.info "Bitwarden vault synced at: $(bw sync --last)"
 done
+
+logout
+exit 0
