@@ -26,22 +26,13 @@ else
     SECRETS_FILE="/config/secrets.yaml"
 fi
 
-if bashio::config.exists 'use_username_as_key' && bashio::config.true 'use_username_as_key'; then
-    USE_USERNAME_AS_KEY="true"
-    bashio::log.debug "Option use_username_as_key enabled."
-else
-    USE_USERNAME_AS_KEY="false"
-fi
-
-USE_USERNAME_AS_KEY=$(bashio::config 'use_username_as_key')
-
 #
 # Script functions
 #
 
 function login {
     bashio::log.debug "Configuring Bitwarden server..."
-    bw config server ${BW_SERVER}
+    bw config server ${BW_SERVER} &>/dev/null
 
     bashio::log.debug "Logging into Bitwarden..."
     export BW_SESSION=$(bw login --raw ${BW_USERNAME} ${BW_PASSWORD})
@@ -71,7 +62,7 @@ function login_check {
     if [ $? -eq 0 ]; then
         bashio::log.debug "Logged in to Bitwarden"
     else
-        bashio::log.warn "Bitwarden login expired. Logging in again..."
+        bashio::log.warning "Bitwarden login expired. Logging in again..."
         login
     fi
 }
@@ -95,20 +86,6 @@ function generate_secrets {
 
     for row in $(bw list items --organizationid ${BW_ORG_ID} | jq -c '.[] | select(.type == 1) | (.|@base64)'); do
         row_contents=$(echo ${row} | jq -r '@base64d')
-
-        # This is the old style of parsing and writing secrets (DEPRECATED).
-        if bashio::var.true ${USE_USERNAME_AS_KEY}; then
-            username=$(echo $row_contents | jq -r '.login.username')
-            password=$(echo $row_contents | jq -r '.login.password')
-
-            if [ "${username}" != "null" ] && [ "${password}" != "null" ]; then
-                bashio::log.debug "Writing ${username} with ${password}"
-                echo "${username}: ${password}" >> ${TEMP_SECRETS_FILE}
-            fi
-            
-            continue
-        fi
-
         name=$(echo $row_contents | jq -r '.name' | tr '?:&,%@-' ' ' | tr '[]{}#*!|> ' '_' | tr -s '_' | tr '[:upper:]' '[:lower:]')
         
         write_field "${name}" "${row_contents}" ".login.username" "username"
@@ -199,27 +176,37 @@ login
 set_org_id
 
 while true; do
-    bashio::log.debug "Generating secrets file from logins..."
-    generate_secrets
-    bashio::log.debug "Home Assistant secrets generated."
+    num_of_items=$(bw list items --organizationid ${BW_ORG_ID} | jq length)
 
-    bashio::log.debug "Comparing newly generated secrets..."
-    if cmp -s -- "${TEMP_SECRETS_FILE}" "${SECRETS_FILE}"; then
-        rm -f ${TEMP_SECRETS_FILE}
-        bashio::log.debug "No secrets change detected."
+    if [ ${num_of_items} -gt 0 ]; then
+        bashio::log.debug "Generating secrets.yaml file from login entries..."
+        generate_secrets
+        bashio::log.debug "Home Assistant secrets generated."
+
+        bashio::log.debug "Comparing newly generated secrets to secrets.yaml..."
+        if cmp -s -- "${TEMP_SECRETS_FILE}" "${SECRETS_FILE}"; then
+            rm -f ${TEMP_SECRETS_FILE}
+            bashio::log.debug "No secrets changes detected."
+        else
+            bashio::log.info "Changed from Bitwarden detected, replacing secrets.yaml..."
+            mv -f ${TEMP_SECRETS_FILE} ${SECRETS_FILE}
+            chmod go-wrx ${SECRETS_FILE}
+        fi
+        
+        bashio::log.debug "Generating secret files from notes..."
+        generate_secret_files
+        bashio::log.info "Secret files created."
     else
-        bashio::log.info "Changed from Bitwarden detected, replacing secrets.yaml..."
-        mv -f ${TEMP_SECRETS_FILE} ${SECRETS_FILE}
-        chmod go-wrx ${SECRETS_FILE}
+        bashio::log.error "No secrets found in your organisation!"
+        bashio::log.error "--------------------------------------"
+        bashio::log.error "Ensure that you have:"
+        bashio::log.error "  - At least 1 secret in your organisation ${BW_ORGANIZATION}"
+        bashio::log.error "  - Bitwarden is started when using the Bitwarden add-on"
+        bashio::log.error "--------------------------------------"
     fi
-    
-    bashio::log.debug "Generating secret files from notes..."
-    generate_secret_files
-    bashio::log.info "Secret files created."
 
     if [ "${REPEAT_ENABLED}" != "true" ]; then
-        logout
-        exit 0
+        break
     fi
 
     sleep "${REPEAT_INTERVAL}"
@@ -229,3 +216,6 @@ while true; do
     bw sync &>/dev/null
     bashio::log.info "Bitwarden vault synced at: $(bw sync --last)"
 done
+
+logout
+exit 0
