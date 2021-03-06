@@ -1,5 +1,8 @@
 #!/usr/bin/env bashio
 
+# This script traps it's own errors, no need for a babysitting set -e.
+set +e
+
 #
 # Global variables
 #
@@ -23,6 +26,7 @@ if bashio::config.exists 'secrets_file'; then
     SECRETS_FILE="/config/$(bashio::config 'secrets_file')"
     bashio::log.debug "Custom secrets file set to ${SECRETS_FILE}."
 else
+    # Default to secrets.yaml
     SECRETS_FILE="/config/secrets.yaml"
 fi
 
@@ -35,12 +39,13 @@ function login {
     bw config server ${BW_SERVER} &>/dev/null
 
     bashio::log.debug "Logging into Bitwarden..."
-    export BW_SESSION=$(bw login --raw ${BW_USERNAME} ${BW_PASSWORD})
+    SESSION=$(bw login --raw ${BW_USERNAME} ${BW_PASSWORD}) &>/dev/null
 
     if [ $? -eq 0 ]; then
         bashio::log.info "Bitwarden login succesful!"
-        bashio::log.debug "Retrieving organization id..."
+        export BW_SESSION=${SESSION}
     else
+        echo ""
         bashio::log.fatal "Bitwarden login failed. Exiting..."
         exit 1
     fi
@@ -68,10 +73,12 @@ function login_check {
 }
 
 function set_org_id {
-    export BW_ORG_ID=$(bw get organization "${BW_ORGANIZATION}" | jq -r '.id') 2>/dev/null
+    bashio::log.debug "Retrieving organization id..."
+    ORG=$(bw get organization "${BW_ORGANIZATION}" | jq -r '.id') 2>/dev/null
 
     if [ $? -eq 0 ]; then
         bashio::log.debug "Retrieved organization id for ${BW_ORGANIZATION}"
+        export BW_ORG_ID=${ORG}
     else
         bashio::log.fatal "Could not retrieve Bitwarden organization ${BW_ORGANIZATION}. Exiting..."
         exit 1
@@ -179,16 +186,16 @@ while true; do
     num_of_items=$(bw list items --organizationid ${BW_ORG_ID} | jq length)
 
     if [ ${num_of_items} -gt 0 ]; then
-        bashio::log.debug "Generating secrets.yaml file from login entries..."
+        bashio::log.debug "Generating ${SECRETS_FILE} file from login entries..."
         generate_secrets
         bashio::log.debug "Home Assistant secrets generated."
 
-        bashio::log.debug "Comparing newly generated secrets to secrets.yaml..."
+        bashio::log.debug "Comparing newly generated secrets to ${SECRETS_FILE}..."
         if cmp -s -- "${TEMP_SECRETS_FILE}" "${SECRETS_FILE}"; then
             rm -f ${TEMP_SECRETS_FILE}
             bashio::log.debug "No secrets changes detected."
         else
-            bashio::log.info "Changed from Bitwarden detected, replacing secrets.yaml..."
+            bashio::log.info "Changes from Bitwarden detected, replacing ${SECRETS_FILE}..."
             mv -f ${TEMP_SECRETS_FILE} ${SECRETS_FILE}
             chmod go-wrx ${SECRETS_FILE}
         fi
