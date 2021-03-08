@@ -126,6 +126,6 @@ When `true` this enables automatic refreshing of your secrets.
 
 Interval, in seconds, to refresh your secrets from Bitwarden. This value is only required when `repeat.enabled` is set to `true`.
 
-### option `secret_file` (optional)
+### option `secrets_file` (optional)
 
 Optionally define an alternative secret file to parse the secrets into. Providing this value can be useful for testing and debugging this add-on. This file will still be put inside your Home Assistant configuration directory.
