@@ -51,7 +51,7 @@ providers:
   file:
     directory: "{{ $options.dynamic_configuration_path }}"
 
-{{- if and (has $options "access_logs") $options.access_logs -}}
+{{ if and (has $options "access_logs") $options.access_logs -}}
 accessLog: {}
 {{- end }}
 

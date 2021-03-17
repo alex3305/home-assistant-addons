@@ -1,5 +1,9 @@
 # Changelog
 
+## 4.0.9
+
+* 🐞 Fixed `access_logs` option within Traefik template (#22)
+
 ## 4.0.8
 
 * 📈 Updated Traefik to 2.4.7
