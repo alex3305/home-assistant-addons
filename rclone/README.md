@@ -12,7 +12,7 @@ Rclone bundled as an Home Assistant add-on.
 
 ## About
 
-Rclone ("rsync for cloud storage") is a command line program to sync files and directories to and from different cloud storage providers.
+Rclone ("rsync for cloud storage") is a command line program to sync files and directories to and from different cloud storage providers. This add-on can only be used to sync your Home Assistant files (like snapshots) to a remote. 
 
 [Click here for the full Rclone documentation](https://rclone.org/docs/)
 
