@@ -7,6 +7,6 @@
         "i386": "hassioaddons/base"
     },
     "args": {
-        "BW_CLI_VERSION": "1.14.0"
+        "BW_CLI_VERSION": "1.16.0"
     }
 }
