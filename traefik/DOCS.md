@@ -146,6 +146,12 @@ Manually set the DNS servers to use when performing the verification step. Usefu
 
 For more information, see the [Traefik documentation](https://docs.traefik.io/https/acme/#resolvers) regarding this subject.
 
+### Option `pilot_token`
+
+Manually set the Traefik pilot token to connect the instance to your pilot account for monitoring.
+
+For more information, go on the [Traefik pilot website](https://https://pilot.traefik.io/).
+
 ### Option `env_vars`
 
 Optional environment variables that can be added. These additional configuration values can be necessary for example for the Let's Encrypt DNS challange provider. See the example configuration above for an concrete example.
