@@ -20,6 +20,9 @@ entryPoints:
 api:
   dashboard: true
   insecure: true
+  
+pilot:
+    token: {{ $options.pilot_token }}
 
 {{ if and (has $options "letsencrypt") ($options.letsencrypt.enabled) -}}
 certificatesResolvers:
