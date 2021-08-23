@@ -31,6 +31,7 @@
       "enabled": false,
       "resolvers": []
     },
+    "pilot_token": "",
     "env_vars": []
   },
   "schema": {
@@ -46,6 +47,7 @@
       "delayBeforeCheck": "int?",
       "resolvers": ["str?"]
     },
+    "pilot_token": "str?",
     "env_vars": ["str"]
   }
 }
