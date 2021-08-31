@@ -1,6 +1,6 @@
 {
   "name": "Bitwarden secrets for Home Assistant",
-  "version": "1.4.2",
+  "version": "1.4.3",
   "slug": "bw-cli-secrets",
   "description": "Manage Home Assistant secrets easily from Bitwarden.",
   "arch": ["armhf", "armv7", "amd64", "aarch64", "i386"],
