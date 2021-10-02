@@ -73,6 +73,7 @@ letsencrypt:
   delayBeforeCheck: 10
   resolvers:
     - '1.1.1.1:53'
+pilot_token: 'My-SUPER-secret-Pilot-Token-Here'
 env_vars:
   - CF_DNS_API_TOKEN=YOUR-API-TOKEN-HERE
   - ANOTHER_ENV_VARIABLE=SOME-VALUE
