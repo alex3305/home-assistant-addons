@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.4.4
+
+* 📈 Updated Bitwarden CLI to 1.20.0
+
 ## 1.4.3
 
 * 📈 Updated Bitwarden CLI to 1.18.0
