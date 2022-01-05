@@ -7,6 +7,6 @@
         "i386": "hassioaddons/base"
     },
     "args": {
-        "RCLONE_VERSION": "1.56.2"
+        "RCLONE_VERSION": "1.57.0"
     }
 }
