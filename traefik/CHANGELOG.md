@@ -1,5 +1,9 @@
 # Changelog
 
+## 4.1.1
+
+* 📈 Updated Traefik to 2.5.6 (#27)
+
 ## 4.1.0
 
 * 🆕 Added Pilot support (#24, thanks @grea09)
