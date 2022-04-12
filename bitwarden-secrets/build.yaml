@@ -1,0 +1,8 @@
+build_from:
+  aarch64: ghcr.io/hassio-addons/base/aarch64:latest
+  amd64: ghcr.io/hassio-addons/base/amd64:latest
+  armhf: ghcr.io/hassio-addons/base/armhf:latest
+  armv7: ghcr.io/hassio-addons/base/armv7:latest
+  i386: ghcr.io/hassio-addons/base/i386:latest
+args:
+  BW_CLI_VERSION: 1.22.0

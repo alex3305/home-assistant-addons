@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.4.5
+
+* 🆕 Migrate to yaml configuration
+* 📈 Updated Bitwarden CLI to 1.22.0
+
 ## 1.4.4
 
 * 📈 Updated Bitwarden CLI to 1.20.0
