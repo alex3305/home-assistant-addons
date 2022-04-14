@@ -1,5 +1,10 @@
 # Changelog
 
+## 4.1.2
+
+* 🆕 Migrate to yaml configuration
+* 📈 Updated Traefik to 2.6.3
+
 ## 4.1.1
 
 * 📈 Updated Traefik to 2.5.6 (#27)
