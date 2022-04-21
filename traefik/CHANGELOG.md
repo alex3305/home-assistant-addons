@@ -1,5 +1,9 @@
 # Changelog
 
+## 4.1.3
+
+* 🐞 Hotfix for update 4.1.2 (#34)
+
 ## 4.1.2
 
 * 🆕 Migrate to yaml configuration
