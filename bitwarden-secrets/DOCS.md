@@ -75,7 +75,7 @@ is parsed into `google_assistant_service_key.json` in your Home Assistant config
 ```yaml
 log_level: info
 bitwarden:
-  server: 'http://a0d7b954-bitwarden'
+  server: 'http://a0d7b954-bitwarden:7277/'
   username: homeassistant@localhost.lan
   password: homeassistant
   organization: Home Assistant
@@ -104,7 +104,7 @@ you are troubleshooting.
 
 ### Option `bitwarden.server` (required)
 
-Bitwarden server. This defaults to the DNS name of the Bitwarden Home Assistand add-on, but can be changed to your liking.
+Bitwarden server. This defaults to the DNS name of the Vaultwarden Home Assistand add-on, but can be changed to your liking.
 
 ### Option `bitwarden.username` (required)
 

@@ -20,7 +20,7 @@ map:
 options:
   log_level: info
   bitwarden:
-    server: http://a0d7b954-bitwarden
+    server: http://a0d7b954-bitwarden:7277/
     username: homeassistant@localhost.lan
     password: homeassistant
     organization: Home Assistant
