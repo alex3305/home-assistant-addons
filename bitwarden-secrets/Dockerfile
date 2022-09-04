@@ -6,9 +6,14 @@ ARG BW_CLI_VERSION
 
 COPY run.sh /
 
-RUN apk add --no-cache jq npm && \
-    npm install --no-progress --no-audit -g @bitwarden/cli@${BW_CLI_VERSION} && \
-    chmod +x run.sh
+RUN \
+    apk add --no-cache \
+        jq npm \
+    && npm install \
+        --no-progress \
+        --no-audit \
+        -g @bitwarden/cli@${BW_CLI_VERSION} \
+    && chmod +x run.sh
 
 CMD [ "/run.sh" ]
 
