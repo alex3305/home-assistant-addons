@@ -45,6 +45,24 @@ mariadb_password: 'this-is-my-database-password!'
 
 > _**NOTE** Refrain from using control characters inside item names._
 
+Custom fields are also supported. The field type "Hidden" and "Text" are treated equally and their text will be written. The "Boolean" Field Type will be written as `true` or `false`. Example:
+
+| Item | Text | Hidden | Boolean |
+| ---- | ---- | ------ | ------- |
+| Custom Fields | my text | secret text | ☑️ |
+
+is parsed into:
+
+```yaml
+# Home Assistant secrets file
+# DO NOT MODIFY -- Managed by Bitwarden Secrets for Home Assistant add-on
+
+custom_fields_text: 'my text'
+custom_fields_hidden: 'secret text'
+custom_fields_boolean: 'true'
+```
+> _**NOTE** The custom field type "Linked" is not supported yet._
+
 Besides creating a `secrets.yaml` file, you can also easily manage secret files. For every for **Note** item in the Bitwarden vault, a secret file will be created from the _Name_ with the _Note contents_. For instance:
 
 | Item | Note contents (partial) |
