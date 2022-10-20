@@ -14,11 +14,12 @@ stage: stable
 boot: auto
 url: https://alxx.nl/home-assistant-addons/tree/master/bitwarden-secrets
 hassio_role: default
-hassio_api: true
+homeassistant_api: true
 map:
   - config:rw
 options:
   log_level: info
+  reload_core: false
   bitwarden:
     server: http://a0d7b954-bitwarden:7277/
     username: homeassistant@localhost.lan
@@ -29,6 +30,7 @@ options:
     interval: 300
 schema:
   log_level: list(trace|debug|info|notice|warning|error|fatal)
+  reload_core: bool
   bitwarden:
     server: str
     username: str

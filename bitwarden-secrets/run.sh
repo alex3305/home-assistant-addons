@@ -22,6 +22,12 @@ else
     REPEAT_ENABLED="false"
 fi
 
+if bashio::config.true 'reload_core'; then
+    RELOAD_CORE="true"
+else
+    RELOAD_CORE="false"
+fi
+
 if bashio::config.exists 'secrets_file'; then
     SECRETS_FILE="/config/$(bashio::config 'secrets_file')"
     bashio::log.debug "Custom secrets file set to ${SECRETS_FILE}."
@@ -123,6 +129,18 @@ function generate_secret_files {
     done
 }
 
+function reload_core_config {
+    # Docs: 
+    #   - https://developers.home-assistant.io/docs/add-ons/communication/
+    #   - https://developers.home-assistant.io/docs/api/rest/
+    # 
+    # First check config:
+    # curl -X GET -H "Authorization: Bearer ${SUPERVISOR_TOKEN}" -H "Content-Type: application/json" http://supervisor/core/api/config/core/check_config
+    # 
+    # Then call service to reload config
+    # curl -X POST -H "Authorization: Bearer ${SUPERVISOR_TOKEN}" -H "Content-Type: application/json" http://supervisor/core/api/services/homeassistant/reload_core_config
+}
+
 function write_field {
     secret_name=${1}
     row_contents=${2}
@@ -205,6 +223,11 @@ while true; do
         bashio::log.debug "Generating secret files from notes..."
         generate_secret_files
         bashio::log.info "Secret files created."
+        
+        if [ "${RELOAD_CORE}" == "true" ]; then
+            bashio::log.debug "Checking and reloading core..."
+            reload_core_config
+        fi
     else
         bashio::log.error "No secrets found in your organisation!"
         bashio::log.error "--------------------------------------"
