@@ -73,7 +73,6 @@ letsencrypt:
   delayBeforeCheck: 10
   resolvers:
     - '1.1.1.1:53'
-pilot_token: 'My-SUPER-secret-Pilot-Token-Here'
 env_vars:
   - CF_DNS_API_TOKEN=YOUR-API-TOKEN-HERE
   - ANOTHER_ENV_VARIABLE=SOME-VALUE
@@ -146,12 +145,6 @@ This setting can be useful if internal networks block external DNS queries. For 
 Manually set the DNS servers to use when performing the verification step. Useful for situations where internal DNS does not resolve to the same addresses as the public internet (e.g. on a LAN using a FQDN as part of hostnames). 
 
 For more information, see the [Traefik documentation](https://docs.traefik.io/https/acme/#resolvers) regarding this subject.
-
-### Option `pilot_token`
-
-Manually set the Traefik pilot token to connect the instance to your pilot account for monitoring.
-
-For more information, go on the [Traefik pilot website](https://https://pilot.traefik.io/).
 
 ### Option `env_vars`
 
