@@ -63,7 +63,7 @@ custom_fields_boolean: 'true'
 ```
 > _**NOTE** The custom field type "Linked" is not supported yet._
 
-Besides creating a `secrets.yaml` file, you can also easily manage secret files. For every for **Note** item in the Bitwarden vault, a secret file will be created from the _Name_ with the _Note contents_. For instance:
+Besides creating a `secrets.yaml` file, you can also easily manage secret files. For every **Note** item in the Bitwarden vault, a secret file will be created from the _Name_ with the _Note contents_. For instance:
 
 | Item | Note contents (partial) |
 | ---- | ----------------------- |
