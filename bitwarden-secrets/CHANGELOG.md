@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.4.6
+
+* 🆕 Added newline between entries (#41 @SVNKoch)
+* 🆕 Updated docs to reflect all functionality (#40 @SVNKoch)
+* 📈 Updated Bitwarden CLI to 1.22.1
+
 ## 1.4.5
 
 * 🆕 Migrate to yaml configuration
