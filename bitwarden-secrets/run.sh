@@ -218,16 +218,16 @@ while true; do
             bashio::log.info "Changes from Bitwarden detected, replacing ${SECRETS_FILE}..."
             mv -f ${TEMP_SECRETS_FILE} ${SECRETS_FILE}
             chmod go-wrx ${SECRETS_FILE}
+
+            if [ "${RELOAD_CORE}" == "true" ]; then
+                bashio::log.debug "Checking and reloading core..."
+                reload_core_config
+            fi
         fi
         
         bashio::log.debug "Generating secret files from notes..."
         generate_secret_files
         bashio::log.info "Secret files created."
-        
-        if [ "${RELOAD_CORE}" == "true" ]; then
-            bashio::log.debug "Checking and reloading core..."
-            reload_core_config
-        fi
     else
         bashio::log.error "No secrets found in your organisation!"
         bashio::log.error "--------------------------------------"
