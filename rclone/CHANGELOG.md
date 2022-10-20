@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.0.10
+
+* 📈 Updated Rclone to 1.59.2
+
 ## 3.0.9
 
 * 🆕 Migrate to yaml configuration
