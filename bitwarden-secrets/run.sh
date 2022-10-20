@@ -89,9 +89,11 @@ function generate_secrets {
     touch ${TEMP_SECRETS_FILE}
     
     printf "# Home Assistant secrets file\n" >> ${TEMP_SECRETS_FILE}
-    printf "# DO NOT MODIFY -- Managed by Bitwarden Secrets for Home Assistant add-on\n\n" >> ${TEMP_SECRETS_FILE}
+    printf "# DO NOT MODIFY -- Managed by Bitwarden Secrets for Home Assistant add-on\n" >> ${TEMP_SECRETS_FILE}
 
     for row in $(bw list items --organizationid ${BW_ORG_ID} | jq -c '.[] | select(.type == 1) | (.|@base64)'); do
+        printf "\n" >> ${TEMP_SECRETS_FILE}
+        
         row_contents=$(echo ${row} | jq -r '@base64d')
         name=$(echo $row_contents | jq -r '.name' | tr '?:&,%@-' ' ' | tr '[]{}#*!|> ' '_' | tr -s '_' | tr '[:upper:]' '[:lower:]')
         
