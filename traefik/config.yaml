@@ -11,6 +11,7 @@ arch:
   - armv7
   - i386
 startup: system
+init: false
 stage: stable
 boot: auto
 url: https://alxx.nl/home-assistant-addons/tree/master/traefik
