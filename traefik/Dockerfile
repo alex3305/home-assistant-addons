@@ -19,7 +19,7 @@ COPY rootfs /
 
 LABEL \
     io.hass.name="Treafik for ${BUILD_ARCH}" \
-    io.hass.description="Home Assistant Unofficial Add-on: ${BUILD_ARCH} Treafik image" \
+    io.hass.description="Home Assistant Unofficial Add-on: ${BUILD_ARCH} Traefik image" \
     maintainer="Alex van den Hoogen <homeassistant@alxx.nl>" \
     org.opencontainers.image.title="Traefik for ${BUILD_ARCH}" \
     org.opencontainers.image.description="Home Assistant Unofficial Add-on: ${BUILD_ARCH} Traefik image" \
