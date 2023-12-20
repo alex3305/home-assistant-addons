@@ -22,6 +22,7 @@ map:
   - share:rw
 options:
   configuration_path: "/share/rclone/rclone.conf"
+  local_path: "/backup/"
   local_retention_days: 60
   remotes:
     - name: ''
@@ -29,6 +30,7 @@ options:
       retention_days: 14
 schema:
   configuration_path: str
+  local_path: str
   local_retention_days: int
   remotes:
     - name: str
